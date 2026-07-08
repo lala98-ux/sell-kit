@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260708f">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260708p">
 </head>
 <body>
 
@@ -362,18 +362,27 @@
     </div>
     <div class="usecase reveal">
       <div class="usecase-nav" id="usecaseNav">
-        <button type="button" class="usecase-goal is-active" data-purpose="upsell:객단가를 높이는 자동 추천|discount:구매 수량을 늘리는 N+1|firstbuy:첫 방문을 첫 구매로">
-          <span class="usecase-goal-tag">SALES</span>
-          <span class="usecase-goal-title">매출을 올리고 싶어요</span>
-        </button>
-        <button type="button" class="usecase-goal" data-purpose="discount:수량별 할인으로 대량 구매 유도|multiship:여러 곳으로 한 번에 대량 배송">
-          <span class="usecase-goal-tag">WHOLESALE</span>
-          <span class="usecase-goal-title">대량으로 판매하고 싶어요</span>
-        </button>
-        <button type="button" class="usecase-goal" data-purpose="review:다음 고객을 설득하는 리뷰|firstbuy:첫 고객을 단골로">
-          <span class="usecase-goal-tag">CUSTOMER</span>
-          <span class="usecase-goal-title">고객과의 관계를 만들고 싶어요</span>
-        </button>
+        <div class="usecase-goal is-active" data-purpose="upsell:객단가를 높이는 상품 자동 추천|discount:구매 수량을 늘리는 N+1 프로모션|firstbuy:첫 방문을 첫 구매로">
+          <button type="button" class="usecase-goal-head">
+            <span class="usecase-goal-tag">SALES</span>
+            <span class="usecase-goal-title">매출을 올리고 싶어요</span>
+          </button>
+          <div class="usecase-goal-acc"></div>
+        </div>
+        <div class="usecase-goal" data-purpose="discount:수량별 할인으로 대량 구매 유도|multiship:한 주문건으로 여러 지역에 분할 배송">
+          <button type="button" class="usecase-goal-head">
+            <span class="usecase-goal-tag">WHOLESALE</span>
+            <span class="usecase-goal-title">대량으로 판매하고 싶어요</span>
+          </button>
+          <div class="usecase-goal-acc"></div>
+        </div>
+        <div class="usecase-goal" data-purpose="review:다양한 리뷰 노출로 신뢰도 향상|firstbuy:첫 고객을 단골로 전환">
+          <button type="button" class="usecase-goal-head">
+            <span class="usecase-goal-tag">CUSTOMER</span>
+            <span class="usecase-goal-title">고객과의 관계를 만들고 싶어요</span>
+          </button>
+          <div class="usecase-goal-acc"></div>
+        </div>
       </div>
       <div class="usecase-panel" id="usecasePanel"></div>
     </div>
@@ -386,11 +395,11 @@
     <div class="section-head reveal">
       <span class="section-eyebrow">PLATFORM</span>
       <h2 class="section-title">지원 플랫폼</h2>
-      <p class="section-sub">지금은 카페24 기준으로 제공되며, 다른 플랫폼도 순차적으로 도입할 예정입니다.</p>
+      <p class="section-sub">카페24를 시작으로, 지원 플랫폼을 계속 넓혀가고 있습니다.</p>
     </div>
     <div class="platform-grid">
       <div class="platform-card live reveal">
-        <div class="platform-name">카페24</div>
+        <img class="platform-logo" src="assets/img/cafe24.svg" alt="카페24">
         <span class="kit-status live">지원 중</span>
       </div>
       <div class="platform-card reveal">
@@ -406,7 +415,7 @@
         <span class="kit-status soon">계속 확대</span>
       </div>
     </div>
-    <p class="platform-note reveal">셀킷의 모든 킷은 <strong>카페24 기준</strong>으로 제공됩니다. 다른 플랫폼도 순차 도입 예정입니다.</p>
+    <p class="platform-note reveal">현재 셀킷의 모든 서비스는 <strong>카페24 기준</strong>으로 제공되고 있습니다. 다른 플랫폼들도 순차 도입 예정입니다.</p>
   </div>
 </section>
 
@@ -652,22 +661,22 @@
           '<div class="ig-set-title">세트상품 1+1</div>' +
           '<div class="ig-set-list">' +
             '<div class="ig-set-row"><span class="ig-set-th">👕</span><span class="ig-set-nm">티셔츠</span><span class="ig-set-pr">20,000</span></div>' +
-            '<div class="ig-set-row"><span class="ig-set-th">👖</span><span class="ig-set-nm">청바지</span><span class="ig-set-free">FREE</span><span class="ig-set-pr strike">15,000</span></div>' +
+            '<div class="ig-set-row dc-hit"><span class="ig-set-th">👖</span><span class="ig-set-nm">청바지</span><span class="ig-set-free">FREE</span><span class="ig-set-pr strike">15,000</span></div>' +
           '</div>' +
           '<div class="ig-set-arrow">↓</div>' +
           '<div class="ig-set-result"><span class="ig-set-rth">👕</span><span class="ig-set-op">+</span><span class="ig-set-rth">👖</span></div>' +
-          '<div class="ig-set-badge">1+1<br><b>20,000원</b></div>' +
+          '<div class="ig-set-final"><span class="ig-set-flabel">1+1 할인가</span><span class="ig-set-badge">20,000원</span></div>' +
         '</div>' +
         '<div class="ig-set-panel">' +
           '<div class="ig-set-title">카테고리별 N+1</div>' +
           '<div class="ig-set-list">' +
-            '<div class="ig-set-row"><span class="ig-set-th">💎</span><span class="ig-set-nm">귀걸이</span><span class="ig-set-free">FREE</span><span class="ig-set-pr strike">50,000</span></div>' +
+            '<div class="ig-set-row dc-hit"><span class="ig-set-th">💎</span><span class="ig-set-nm">귀걸이</span><span class="ig-set-free">FREE</span><span class="ig-set-pr strike">50,000</span></div>' +
             '<div class="ig-set-row"><span class="ig-set-th">📿</span><span class="ig-set-nm">목걸이</span><span class="ig-set-pr">65,000</span></div>' +
             '<div class="ig-set-row"><span class="ig-set-th">💍</span><span class="ig-set-nm">반지</span><span class="ig-set-pr">55,000</span></div>' +
           '</div>' +
           '<div class="ig-set-arrow">↓</div>' +
           '<div class="ig-set-result"><span class="ig-set-rth">💎</span><span class="ig-set-op">+</span><span class="ig-set-rth">📿</span><span class="ig-set-op">+</span><span class="ig-set-rth">💍</span></div>' +
-          '<div class="ig-set-badge">N+1<br><b>115,000원</b></div>' +
+          '<div class="ig-set-final"><span class="ig-set-flabel">N+1 할인가</span><span class="ig-set-badge">115,000원</span></div>' +
         '</div>' +
       '</div>',
     upsell:
@@ -744,8 +753,8 @@
     SELLKIT_KITS.forEach(function (k) { byId[k.id] = k; });
     var goals = Array.prototype.slice.call(nav.querySelectorAll('.usecase-goal'));
 
-    function renderPanel(goal) {
-      panel.innerHTML = goal.getAttribute('data-purpose').split('|').map(function (item) {
+    function rowsHTML(goal) {
+      return goal.getAttribute('data-purpose').split('|').map(function (item) {
         var parts = item.split(':');
         var kit = byId[parts[0]];
         var inner = '<span class="kit-chip' + (kit.status === 'coming' ? ' soon' : '') + '">' +
@@ -756,13 +765,28 @@
         if (kit.status === 'live') return '<a class="purpose-link" href="' + kit.path + '">' + inner + '</a>';
         return '<button type="button" class="purpose-link" onclick="sellkitComingSoon()">' + inner + '</button>';
       }).join('');
+    }
+
+    function renderPanel(goal) {
+      panel.innerHTML = rowsHTML(goal);
       panel.classList.remove('is-in');
       void panel.offsetWidth;
       panel.classList.add('is-in');
     }
 
+    var mq = window.matchMedia('(max-width: 960px)');
+
+    /* 각 목표 안의 아코디언 본문(모바일용)은 한 번만 채움 */
     goals.forEach(function (g) {
-      g.addEventListener('click', function () {
+      var acc = g.querySelector('.usecase-goal-acc');
+      if (acc) acc.innerHTML = rowsHTML(g);
+      var head = g.querySelector('.usecase-goal-head') || g;
+      head.addEventListener('click', function () {
+        /* 모바일: 열린 걸 다시 누르면 닫힘(아코디언) */
+        if (mq.matches && g.classList.contains('is-active')) {
+          g.classList.remove('is-active');
+          return;
+        }
         goals.forEach(function (x) { x.classList.remove('is-active'); });
         g.classList.add('is-active');
         renderPanel(g);
@@ -771,6 +795,8 @@
 
     var active = nav.querySelector('.usecase-goal.is-active') || goals[0];
     renderPanel(active);
+    /* 모바일은 기본 전부 닫힘 */
+    if (mq.matches) goals.forEach(function (x) { x.classList.remove('is-active'); });
   })();
 
   /* FAQ 아코디언 */
