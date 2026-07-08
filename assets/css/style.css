@@ -758,7 +758,7 @@ section { padding: 96px 0; }
 }
 .kit-go:hover { transform: translateX(3px); }
 
-.kit-row.is-coming { border-style: dashed; }
+.kit-row.is-coming { border-style: solid; }
 .kit-row.is-coming .kit-go { color: var(--muted); font-weight: 600; }
 
 /* ---------- 킷 인포그래픽 영역 ---------- */
@@ -1879,6 +1879,8 @@ section { padding: 96px 0; }
   .up3-ship-msg, .up3-ship-done { font-size: 12.5px; }
   .up3-track { height: 8px; }
   /* 리뷰킷 인포: 모바일 컴팩트 (행 높이/간격은 유지 → 스왑 정렬 보존) */
+  /* 차단리뷰 접혀도 영역 안 줄고 콘텐츠 가운데 유지 (PC처럼) */
+  .ig-review { min-height: 208px; justify-content: center; }
   .rv3 { gap: 10px; }
   .rv3-score { justify-content: center; }
   .rv3-total { margin-left: 8px; }
