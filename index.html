@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>셀킷 sellkit — 쇼핑몰에 없던 기능, 클릭 한 번으로</title>
+  <meta name="description" content="할인, 업셀, 리뷰 — 매출에 필요한 기능을 킷 단위로 설치하세요. 개발 없이 5분, 모든 킷 14일 무료체험. 카페24 기준 제공.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260708f">
+</head>
+<body>
+
+<div id="sellkit-header"></div>
+
+<!-- ============ 1. 히어로 ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badges fade-up">
+      <span class="hero-badge hero-badge-cafe24"><span class="dot"></span>카페24 공식 앱스토어 입점</span>
+    </div>
+    <h1 class="fade-up delay-1">
+      쇼핑몰에 없던 그 기능<br>
+      <em>셀킷</em>이 채워드립니다
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      우리 쇼핑몰에 필요한 기능만 골라 담으세요.<br>
+      개발자 없이, 5분이면 충분합니다.
+    </p>
+    <div class="hero-cta fade-up delay-3">
+      <a class="btn btn-primary btn-rotate" href="#" data-store target="_blank" rel="noopener">
+        <span class="cta-text" id="ctaText1">14일 무료로 시작하기</span>
+        <span class="cta-text hidden" id="ctaText2">카페24 앱스토어에서 설치하기</span>
+      </a>
+    </div>
+
+    <p class="hero-tags fade-up delay-4">노코드 · 스크립트 자동 설치 · 설치 즉시 사용 가능</p>
+
+    <!-- 인포그래픽: 3킷 스택 캐러셀 (할인킷 / 업셀킷 / 리뷰킷) -->
+    <div class="hero-visual fade-up delay-4">
+      <div class="deck" id="kitDeck">
+
+        <!-- 할인킷: 장바구니 (2+1 → 가장 저렴한 1개 FREE) -->
+        <div class="deck-card">
+          <span class="kit-tag" data-ic="tag">할인킷</span>
+          <div class="kit-screen">
+            <div class="cart-head">
+              <span class="cart-head-title">장바구니</span>
+              <span class="cart-head-count">총 3개 상품</span>
+            </div>
+            <div class="cart-item dc-item dc-item-1">
+              <div class="cart-thumb">🧥</div>
+              <div class="cart-info">
+                <div class="cart-name">오버핏 데님 자켓</div>
+                <div class="cart-opt">사이즈 M · 인디고블루 · 수량 1개</div>
+              </div>
+              <div class="cart-price dc-price">
+                <span class="dc-was">40,000원</span>
+                <span class="dc-now">
+                  <span class="cart-free">FREE</span>
+                  <span class="cart-strike">40,000원</span>
+                </span>
+              </div>
+            </div>
+            <div class="cart-item dc-item dc-item-2">
+              <div class="cart-thumb">👖</div>
+              <div class="cart-info">
+                <div class="cart-name">데일리 청바지</div>
+                <div class="cart-opt">사이즈 M · 블루 · 수량 2개</div>
+              </div>
+              <div class="cart-price"><span class="cart-amt">100,000원</span></div>
+            </div>
+            <div class="cart-summary dc-summary">
+              <div class="cart-row"><span class="cart-row-label">총 상품금액</span><span class="cart-row-val">140,000원</span></div>
+              <div class="cart-row"><span class="cart-row-label">총 할인금액</span>
+                <span class="cart-row-val dc-swap dc-disc">
+                  <span class="dc-was">0원</span>
+                  <span class="dc-now">40,000원</span>
+                </span>
+              </div>
+              <div class="cart-promo-wrap dc-promo"><span class="cart-promo-hook">└</span><span class="cart-promo">여름 시즌 2+1 행사</span></div>
+              <div class="cart-row cart-total dc-total-flash"><span class="cart-row-label">결제예정금액</span>
+                <span class="cart-row-val dc-swap">
+                  <span class="dc-was">140,000원</span>
+                  <span class="dc-now">100,000원</span>
+                </span>
+              </div>
+              <span class="dc-savings">−40,000원</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 업셀킷: 함께 구매 추천 위젯 -->
+        <div class="deck-card">
+          <span class="kit-tag" data-ic="trend">업셀킷</span>
+          <div class="kit-screen up2">
+            <!-- State A: 하단 고정 담기 바 -->
+            <div class="up2-a">
+              <div class="up2-scroll">
+                <div class="up2-sk up2-sk-img"></div>
+                <div class="up2-sk up2-sk-ln" style="width:78%"></div>
+                <div class="up2-sk up2-sk-ln" style="width:52%"></div>
+                <div class="up2-sk up2-sk-img"></div>
+                <div class="up2-sk up2-sk-ln" style="width:70%"></div>
+                <div class="up2-sk up2-sk-ln" style="width:44%"></div>
+                <div class="up2-sk up2-sk-img"></div>
+                <div class="up2-sk up2-sk-ln" style="width:78%"></div>
+                <div class="up2-sk up2-sk-ln" style="width:52%"></div>
+                <div class="up2-sk up2-sk-img"></div>
+                <div class="up2-sk up2-sk-ln" style="width:70%"></div>
+                <div class="up2-sk up2-sk-ln" style="width:44%"></div>
+              </div>
+              <div class="up2-scrim"></div>
+              <div class="up2-bar">
+                <div class="up2-bar-ic">📦</div>
+                <div class="up2-bar-info">
+                  <span class="up2-bar-label">상품명</span>
+                  <span class="up2-bar-price">28,000원</span>
+                </div>
+                <span class="up2-bar-btn">장바구니 담기</span>
+              </div>
+            </div>
+            <!-- State B: 무료배송 진행도 + 담김 리스트 + 추천 -->
+            <div class="up2-b">
+              <div class="up2-title">장바구니</div>
+              <div class="up2-ship">
+                <span class="up2-ship-badge">🚚 무료배송 혜택</span>
+                <div class="up2-ship-msgs">
+                  <div class="up2-ship-msg">무료배송까지 <strong>20,500원!</strong></div>
+                  <div class="up2-ship-done">🎉 무료배송 적용 완료!</div>
+                </div>
+                <div class="up2-track"><div class="up2-fill"></div></div>
+              </div>
+              <div class="up2-list">
+                <div class="up2-litem">
+                  <div class="up2-litem-thumb">🧥</div>
+                  <div class="up2-litem-info">
+                    <span class="up2-litem-name">오버핏 데님 자켓</span>
+                    <span class="up2-litem-sub">28,000원 · 1개</span>
+                  </div>
+                </div>
+                <div class="up2-litem up2-added">
+                  <div class="up2-litem-thumb">🧦</div>
+                  <div class="up2-litem-info">
+                    <span class="up2-litem-name">프리미엄 양말 3족</span>
+                    <span class="up2-litem-sub">방금 담김 · 무료배송 달성!</span>
+                  </div>
+                </div>
+              </div>
+              <button class="up2-fab" type="button" aria-label="추가 담기"></button>
+              <span class="up2-bubble">+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 리뷰킷: 리뷰 통계 (리뷰 작성하기 → 리뷰 등록 애니메이션) -->
+        <div class="deck-card">
+          <span class="kit-tag" data-ic="review">리뷰킷</span>
+          <div class="kit-screen rv2">
+            <div class="rv2-head">
+              <span class="rv2-htitle">리뷰</span>
+              <span class="rv2-swap rv2-hcount"><span class="rv2-was">1,244</span><span class="rv2-now">1,245</span></span>
+              <span class="rv2-plus">+1</span>
+            </div>
+            <div class="rv2-score">
+              <span class="rv2-star">★</span>
+              <span class="rv2-num">4.9</span>
+            </div>
+            <div class="rv2-like"><strong>98%</strong>의 구매자가 이 상품을 좋아합니다</div>
+            <button class="rv2-write" type="button">상품 리뷰 작성하기</button>
+            <div class="rv2-dist">
+              <div class="rv2-drow">
+                <span class="rv2-dl">아주 좋아요</span>
+                <span class="rv2-dbar"><i class="rv2-dfill" style="width:87%"></i></span>
+                <span class="rv2-swap rv2-dn"><span class="rv2-was">1,088</span><span class="rv2-now">1,089</span></span>
+              </div>
+              <div class="rv2-drow"><span class="rv2-dl">맘에 들어요</span><span class="rv2-dbar"><i class="rv2-dfill" style="width:11%"></i></span><span class="rv2-dn">112</span></div>
+              <div class="rv2-drow"><span class="rv2-dl">보통이에요</span><span class="rv2-dbar"><i class="rv2-dfill" style="width:4%"></i></span><span class="rv2-dn">28</span></div>
+              <div class="rv2-drow"><span class="rv2-dl">그냥 그래요</span><span class="rv2-dbar"><i class="rv2-dfill" style="width:2%"></i></span><span class="rv2-dn">11</span></div>
+              <div class="rv2-drow"><span class="rv2-dl">별로에요</span><span class="rv2-dbar"><i class="rv2-dfill" style="width:1%"></i></span><span class="rv2-dn">6</span></div>
+            </div>
+            <span class="rv2-toast">🎉 리뷰가 등록되었어요!</span>
+
+            <!-- 리뷰 작성 폼 (버튼 클릭 시 자동 등장 → 별점·내용 자동 작성 → 등록) -->
+            <div class="rv2-form">
+              <div class="rv2-form-title">리뷰 작성</div>
+              <div class="rv2-form-stars">
+                <span class="rv2-stars-base">★★★★★</span>
+                <span class="rv2-stars-fill">★★★★★</span>
+              </div>
+              <div class="rv2-form-box">
+                <span class="rv2-type">핏도 좋고 색감도 예뻐요!<span class="rv2-caret">|</span></span>
+              </div>
+              <button class="rv2-form-submit" type="button">등록하기</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="deck-dots" id="deckDots"></div>
+    </div>
+
+    <a class="hero-catalog-link" href="#kits">킷 둘러보기 <span class="hero-catalog-link-arrow">→</span></a>
+  </div>
+</section>
+
+<!-- ============ 2. 킷 스트립 ============ -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track" id="stripTrack"></div>
+</div>
+
+<!-- ============ 3. 공감 ============ -->
+<section class="pain">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">WHY SELLKIT</span>
+      <h2 class="section-title">기능 하나 추가하는 데,<br>아직도 개발 견적부터 알아보시나요?</h2>
+      <p class="section-sub">우리 쇼핑몰에 딱 맞는 견적, 개발, 유지보수까지 <span class="br-pc">—</span><br class="br-pc">셀킷은 그 모든 과정을 '설치 한 번'으로 끝냈습니다.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>쇼핑몰에 없는 기능 개발</h3>
+        <p>없는 기능 하나 만들려고<br>견적·개발·유지보수에 시달렸습니다.</p>
+        <a class="pain-fix" href="#kits">킷 설치 한 번으로 해결 →</a>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+        <h3>매번 반복되는 이벤트 세팅</h3>
+        <p>할인 걸고, 되돌리고, 또 수정하고<br>이벤트마다 같은 작업을 반복했습니다.</p>
+        <a class="pain-fix" href="#kits">클릭 몇 번으로 해결 →</a>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4a2 2 0 0 0-2 2v3.8h1.5a2.7 2.7 0 0 1 0 5.4H2V20a2 2 0 0 0 2 2h3.8v-1.5a2.7 2.7 0 0 1 5.4 0V22H17a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/></svg></div>
+        <h3>우리 몰과 안 맞는 솔루션</h3>
+        <p>기능은 많은데 정작 필요한 건 없고<br>금액마저 부담스러웠습니다.</p>
+        <a class="pain-fix" href="#kits">필요한 킷만 골라 해결 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. 킷 라인업 ============ -->
+<section class="kits" id="kits">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">KIT LINEUP</span>
+      <h2 class="section-title">필요한 킷만 쏙쏙,<br>골라서 설치하세요</h2>
+      <p class="section-sub kit-sub">쇼핑몰에 필요한 킷만 골라 담아 보세요.<br class="br-pc">모든 킷은 14일 동안 무료라 부담도 없습니다.</p>
+    </div>
+    <div class="kit-list" id="kitList"></div>
+    <div class="kit-more reveal">
+      <span class="kit-more-label">+ NEXT KIT</span>
+      새로운 킷을 계속 만들고 있어요. 필요한 기능이 있다면 <a href="contact.html">먼저 말씀해 주세요</a>.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. 작동 방식 ============ -->
+<section class="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">HOW IT WORKS</span>
+      <h2 class="section-title">클릭 몇 번이면,<br>설치부터 적용까지 자동으로 끝</h2>
+      <p class="section-sub">개발도, 별도 세팅 기간도 없습니다. 설치한 그날 바로 쇼핑몰에 적용됩니다.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step reveal">
+        <div class="how-viz">
+          <div class="how-tile">
+            <span class="how-tile-icon"><img src="assets/img/sellkit_logo_1.png" alt="셀킷"></span>
+            <span class="how-tile-txt">
+              <span class="how-tile-name">셀킷</span>
+              <span class="how-tile-sub">카페24 앱스토어</span>
+            </span>
+            <span class="how-inst-btn">
+              <span class="how-inst-t1">+ 설치</span>
+              <span class="how-inst-t2">✓ 설치됨</span>
+              <span class="how-tap"></span>
+            </span>
+          </div>
+        </div>
+        <span class="how-num">01</span>
+        <h3>앱 설치</h3>
+        <p>카페24 앱스토어에서<br>클릭 한 번이면 설치 끝.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-viz">
+          <div class="how-opts">
+            <div class="how-opt"><span class="how-opt-bar"></span><span class="how-tgl"></span></div>
+            <div class="how-opt"><span class="how-opt-bar short"></span><span class="how-tgl"></span></div>
+            <div class="how-opt"><span class="how-opt-bar"></span><span class="how-tgl"></span></div>
+          </div>
+        </div>
+        <span class="how-num">02</span>
+        <h3>옵션 설정</h3>
+        <p>킷 관리자 화면에서<br>쇼핑몰에 맞게 조건만 선택하세요.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-viz">
+          <div class="how-shop">
+            <div class="how-shop-bar"><span class="how-shop-dot"></span><span class="how-shop-dot"></span><span class="how-shop-dot"></span></div>
+            <div class="how-shop-prog"><span class="how-shop-prog-fill"></span></div>
+            <div class="how-shop-body">
+              <span class="how-shop-line"></span>
+              <span class="how-shop-line short"></span>
+              <div class="how-inject">✓ 쇼핑몰 반영 완료</div>
+            </div>
+          </div>
+        </div>
+        <span class="how-num">03</span>
+        <h3>자동 적용</h3>
+        <p>스크립트 자동 설치로<br>쇼핑몰에 즉시 반영됩니다.</p>
+      </div>
+    </div>
+    <div class="how-dots" id="howDots">
+      <button class="how-dot is-on" type="button"></button>
+      <button class="how-dot" type="button"></button>
+      <button class="how-dot" type="button"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. 셀킷과 함께라면 (다크) ============ -->
+<section class="promise">
+  <div class="container">
+    <div class="promise-head reveal">
+      <span class="section-eyebrow">WITH SELLKIT</span>
+      <h2 class="section-title">셀킷과 함께라면</h2>
+      <p class="section-sub">개발자 없이, 기다림 없이, 과한 비용 없이 시작합니다.</p>
+    </div>
+    <div class="compare reveal">
+      <div class="compare-col compare-before">
+        <div class="compare-col-head">기존</div>
+        <ul>
+          <li><span class="compare-ic compare-ic-x">✕</span><span class="compare-txt">외주·개발자가 필요했던 일</span></li>
+          <li><span class="compare-ic compare-ic-x">✕</span><span class="compare-txt">세팅에 몇 주씩 기다리던 일</span></li>
+          <li><span class="compare-ic compare-ic-x">✕</span><span class="compare-txt">안 쓸 기능까지 묶인 비용</span></li>
+        </ul>
+      </div>
+      <div class="compare-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+      <div class="compare-col compare-after">
+        <div class="compare-col-head">셀킷과 함께라면</div>
+        <ul>
+          <li><span class="compare-ic compare-ic-o">✓</span><span class="compare-txt"><strong>개발자 없이 직접</strong><span class="compare-desc"> · 노코드로 켜고 바로 바꿉니다.</span></span></li>
+          <li><span class="compare-ic compare-ic-o">✓</span><span class="compare-txt"><strong>오늘 설치, 오늘 적용</strong><span class="compare-desc"> · 스크립트 자동 설치로 그날 반영.</span></span></li>
+          <li><span class="compare-ic compare-ic-o">✓</span><span class="compare-txt"><strong>필요한 킷만 결제</strong><span class="compare-desc"> · 무거운 올인원 대신 합리적으로.</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. 목적별 ============ -->
+<section class="purpose">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">USE CASE</span>
+      <h2 class="section-title">우리 쇼핑몰, 어디부터 바꿔볼까요?</h2>
+      <p class="section-sub">고민에 꼭 맞는 킷을 클릭해서 바로 확인해 보세요.</p>
+    </div>
+    <div class="usecase reveal">
+      <div class="usecase-nav" id="usecaseNav">
+        <button type="button" class="usecase-goal is-active" data-purpose="upsell:객단가를 높이는 자동 추천|discount:구매 수량을 늘리는 N+1|firstbuy:첫 방문을 첫 구매로">
+          <span class="usecase-goal-tag">SALES</span>
+          <span class="usecase-goal-title">매출을 올리고 싶어요</span>
+        </button>
+        <button type="button" class="usecase-goal" data-purpose="discount:수량별 할인으로 대량 구매 유도|multiship:여러 곳으로 한 번에 대량 배송">
+          <span class="usecase-goal-tag">WHOLESALE</span>
+          <span class="usecase-goal-title">대량으로 판매하고 싶어요</span>
+        </button>
+        <button type="button" class="usecase-goal" data-purpose="review:다음 고객을 설득하는 리뷰|firstbuy:첫 고객을 단골로">
+          <span class="usecase-goal-tag">CUSTOMER</span>
+          <span class="usecase-goal-title">고객과의 관계를 만들고 싶어요</span>
+        </button>
+      </div>
+      <div class="usecase-panel" id="usecasePanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. 플랫폼 ============ -->
+<section class="platform">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">PLATFORM</span>
+      <h2 class="section-title">지원 플랫폼</h2>
+      <p class="section-sub">지금은 카페24 기준으로 제공되며, 다른 플랫폼도 순차적으로 도입할 예정입니다.</p>
+    </div>
+    <div class="platform-grid">
+      <div class="platform-card live reveal">
+        <div class="platform-name">카페24</div>
+        <span class="kit-status live">지원 중</span>
+      </div>
+      <div class="platform-card reveal">
+        <div class="platform-name">샵바이</div>
+        <span class="kit-status soon">도입 예정</span>
+      </div>
+      <div class="platform-card reveal">
+        <div class="platform-name">쇼피파이</div>
+        <span class="kit-status soon">도입 예정</span>
+      </div>
+      <div class="platform-card reveal">
+        <div class="platform-name">+ more</div>
+        <span class="kit-status soon">계속 확대</span>
+      </div>
+    </div>
+    <p class="platform-note reveal">셀킷의 모든 킷은 <strong>카페24 기준</strong>으로 제공됩니다. 다른 플랫폼도 순차 도입 예정입니다.</p>
+  </div>
+</section>
+
+<!-- ============ 9. FAQ ============ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">FAQ</span>
+      <h2 class="section-title">자주 묻는 질문</h2>
+      <p class="section-sub">셀킷 도입 전 궁금한 점을 모았어요.</p>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button type="button" class="faq-btn">설치는 어떻게 하나요? 자동으로 노출되나요?<span class="faq-toggle">+</span></button>
+        <div class="faq-body"><p>카페24 앱을 설치하면 위젯 로더가 자동으로 설치되어 별도 작업 없이 노출됩니다.<br><br>혹시 사용 중인 스킨이나 커스텀 테마 특성상 위젯이 자동으로 노출되지 않는 경우에도 걱정하지 않으셔도 됩니다. 셀킷 팀이 직접 설치를 도와드려요.<br>문의를 남겨주시면 담당자가 쇼핑몰 환경을 확인하고 위젯이 정상 노출되도록 세팅해 드립니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-btn">개발자 없이도 설치·운영할 수 있나요?<span class="faq-toggle">+</span></button>
+        <div class="faq-body"><p>네, 가능합니다. 카페24 앱 연동 시 위젯 로더가 자동 설치되며, 스킨 편집이나 개발 지식 없이 위젯 목록에서 토글만으로 운영할 수 있습니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-btn">결제 전에 무료로 먼저 써볼 수 있나요?<span class="faq-toggle">+</span></button>
+        <div class="faq-body"><p>모든 킷은 14일 동안 무료로 사용할 수 있습니다. 충분히 사용해보고 결정하세요.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-btn">셀킷의 다른 앱과 함께 사용할 수 있나요?<span class="faq-toggle">+</span></button>
+        <div class="faq-body"><p>네, 가능합니다. 예를 들어 할인킷으로 N+1 프로모션을 운영하면서, 업셀킷으로 장바구니 무료배송 진행도 위젯을 함께 노출할 수 있습니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-btn">요금제는 어떻게 구성되어 있나요?<span class="faq-toggle">+</span></button>
+        <div class="faq-body"><p>킷마다 쇼핑몰 규모에 맞는 요금제를 제공합니다. 자세한 내용은 각 킷 페이지에서 확인해주세요.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-btn">카페24가 아닌 다른 플랫폼에서도 쓸 수 있나요?<span class="faq-toggle">+</span></button>
+        <div class="faq-body"><p>현재는 카페24 기준으로 제공되고 있습니다. 그 외 플랫폼(샵바이, 쇼피파이 등)은 도입 예정입니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-btn">도입 전에 상담이나 문의를 할 수 있나요?<span class="faq-toggle">+</span></button>
+        <div class="faq-body"><p>도입 문의를 남겨주실 때 고민되는 방향을 알려주시면, 우리 몰에 맞는 킷을 안내해 드립니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. 최종 CTA ============ -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2>14일 무료 체험,<br class="cta-br"> 부담 없이 셀킷하세요</h2>
+      <p>설치는 5분이면 끝. 직접 경험해보고,<br>필요한 킷만 골라 우리 몰에 딱 맞게 운영하세요.</p>
+      <div class="hero-cta">
+        <a class="btn btn-white" href="#" data-store target="_blank" rel="noopener">14일 무료로 시작하기</a>
+        <a class="btn btn-outline-white" href="#" data-store target="_blank" rel="noopener">카페24 앱스토어에서 설치</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="sellkit-footer"></div>
+
+<script src="assets/js/kits.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/footer.js"></script>
+<script>
+  /* 스크롤 위치 유지 — 헤더/푸터/킷이 JS로 삽입되며 높이가 바뀌어
+     브라우저 기본 복원이 어긋나므로 직접 저장·복원한다. */
+  (function () {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    var KEY = 'sk-scroll:' + location.pathname;
+    window.addEventListener('beforeunload', function () {
+      sessionStorage.setItem(KEY, String(window.scrollY || window.pageYOffset || 0));
+    });
+    /* load 시점(헤더/푸터/이미지까지 배치 완료)에 복원, 부드러운 스크롤은 잠시 해제 */
+    window.addEventListener('load', function () {
+      var y = sessionStorage.getItem(KEY);
+      if (y === null) return;
+      var el = document.documentElement, prev = el.style.scrollBehavior;
+      el.style.scrollBehavior = 'auto';
+      window.scrollTo(0, parseInt(y, 10) || 0);
+      el.style.scrollBehavior = prev;
+    });
+  })();
+
+  /* 앱스토어 링크 일괄 연결 */
+  document.querySelectorAll('[data-store]').forEach(function (el) {
+    el.href = SELLKIT_STORE_URL;
+  });
+
+  /* 히어로 CTA 버튼 메시지 교체 (킷 랜딩 톤앤매너) */
+  (function () {
+    var t1 = document.getElementById('ctaText1');
+    var t2 = document.getElementById('ctaText2');
+    if (!t1 || !t2) return;
+    var showing = 1;
+    setInterval(function () {
+      if (showing === 1) {
+        t1.classList.add('hidden');
+        setTimeout(function () { t2.classList.remove('hidden'); showing = 2; }, 300);
+      } else {
+        t2.classList.add('hidden');
+        setTimeout(function () { t1.classList.remove('hidden'); showing = 1; }, 300);
+      }
+    }, 3000);
+  })();
+
+  /* 히어로 3킷 스택 캐러셀 (할인킷/업셀킷/리뷰킷) */
+  (function () {
+    var deck = document.getElementById('kitDeck');
+    var dotsWrap = document.getElementById('deckDots');
+    if (!deck || !dotsWrap) return;
+
+    /* 카드 상단 킷 이름 뱃지에 아이콘 삽입 */
+    deck.querySelectorAll('.kit-tag[data-ic]').forEach(function (t) {
+      var svg = (typeof SELLKIT_ICONS !== 'undefined' && SELLKIT_ICONS[t.dataset.ic]) || '';
+      t.insertAdjacentHTML('afterbegin', '<span class="kit-tag-ic">' + svg + '</span>');
+    });
+
+    var cards = Array.prototype.slice.call(deck.querySelectorAll('.deck-card'));
+    var n = cards.length;
+    /* 애니메이션 대상 노드를 미리 캐시 (재시작마다 DOM 재탐색 방지 → 렉 감소) */
+    var cardNodes = cards.map(function (c) { return c.querySelectorAll('*'); });
+    var ALL = cards.map(function (_, i) { return i; });
+    var active = 0, t1 = null, t2 = null;
+    var ANIM = 8000, PAUSE = 1000, CYCLE = ANIM + PAUSE; /* 애니 8s + 1s 쉼 */
+    var mq = window.matchMedia('(max-width: 768px)');
+
+    var dots = cards.map(function (_, i) {
+      var d = document.createElement('button');
+      d.type = 'button'; d.className = 'deck-dot';
+      d.addEventListener('click', function () { if (mq.matches) { active = i; mobileShow(); } });
+      dotsWrap.appendChild(d);
+      return d;
+    });
+
+    /* 여러 카드의 애니메이션을 처음(0)부터 재생 — Web Animations API로 reflow 없이 재시작 */
+    var supportsGA = typeof cards[0].getAnimations === 'function';
+    function playCards(idxs) {
+      if (supportsGA) {
+        idxs.forEach(function (i) {
+          cards[i].getAnimations({ subtree: true }).forEach(function (a) { a.currentTime = 0; a.play(); });
+        });
+        return;
+      }
+      idxs.forEach(function (i) { cardNodes[i].forEach(function (nd) { nd.style.animation = 'none'; }); });
+      void deck.offsetWidth;
+      idxs.forEach(function (i) { cardNodes[i].forEach(function (nd) { nd.style.animation = ''; nd.style.animationPlayState = ''; }); });
+    }
+    function pauseCards(idxs) {
+      if (supportsGA) {
+        idxs.forEach(function (i) {
+          cards[i].getAnimations({ subtree: true }).forEach(function (a) { a.pause(); });
+        });
+        return;
+      }
+      idxs.forEach(function (i) { cardNodes[i].forEach(function (nd) { nd.style.animationPlayState = 'paused'; }); });
+    }
+    function resumeCards(idxs) { /* 재시작이 아니라 현재 위치에서 재개 */
+      if (supportsGA) {
+        idxs.forEach(function (i) {
+          cards[i].getAnimations({ subtree: true }).forEach(function (a) { a.play(); });
+        });
+        return;
+      }
+      idxs.forEach(function (i) { cardNodes[i].forEach(function (nd) { nd.style.animationPlayState = ''; }); });
+    }
+    function clearTimers() { clearTimeout(t1); clearTimeout(t2); }
+    function setPos() {
+      cards.forEach(function (c, i) {
+        var pos = mq.matches ? (i - active + n) % n : i;
+        c.classList.remove('pos-0', 'pos-1', 'pos-2');
+        c.classList.add('pos-' + pos);
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('is-on', i === active); });
+    }
+
+    /* PC/태블릿: 3장을 한 번 동기 재생 → 이후 CSS 무한 루프로 이음매 없이 반복 (JS 재시작 없음) */
+    function pcStart() { setPos(); playCards(ALL); }
+
+    /* 모바일: 한 장 재생 → 애니 끝나면 바로 다음으로 스와이프 (대기 없음) */
+    function mobileShow() {
+      setPos();
+      playCards([active]);
+      clearTimers();
+      t2 = setTimeout(function () { active = (active + 1) % n; mobileShow(); }, ANIM);
+    }
+
+    function boot() { clearTimers(); if (mq.matches) mobileShow(); else pcStart(); }
+    boot();
+
+    /* 화면 크기 전환 시 모드 재시작 */
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(boot, 250); });
+
+    /* 모바일: 스와이프 */
+    var sx = null;
+    deck.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    deck.addEventListener('touchend', function (e) {
+      if (sx === null || !mq.matches) return;
+      var dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) { active = (active + (dx < 0 ? 1 : -1) + n) % n; mobileShow(); }
+      sx = null;
+    }, { passive: true });
+  })();
+
+  /* 킷 스트립 (마퀴) — 화면 폭에 맞춰 시퀀스를 채워 빈 공간 없이 무한 반복 */
+  (function () {
+    var track = document.getElementById('stripTrack');
+    if (!track) return;
+    var unit = SELLKIT_KITS.map(function (k) {
+      return '<span class="strip-chip"><span class="strip-ic">' + (SELLKIT_ICONS[k.icon] || '') + '</span>' + k.name + '</span>';
+    }).join('') + '<span class="strip-chip strip-chip-next">+ next kit</span>';
+
+    function build() {
+      track.style.animation = 'none';
+      track.innerHTML = '<div class="strip-seq">' + unit + '</div>';
+      var seqW = track.firstChild.getBoundingClientRect().width + 40; /* +margin-right */
+      var copies = Math.ceil(window.innerWidth / seqW) + 1; /* 한 세트가 화면보다 넓도록 */
+      var half = '';
+      for (var i = 0; i < copies; i++) half += '<div class="strip-seq">' + unit + '</div>';
+      track.innerHTML = half + half; /* 동일한 두 세트 → -50% 이동으로 이음매 없음 */
+      var halfW = seqW * copies;
+      /* play-state는 인라인으로 넣지 않는다 → CSS :hover 일시정지가 동작하도록 */
+      track.style.animation = '';
+      track.style.animationName = 'strip-move';
+      track.style.animationDuration = (halfW / 55).toFixed(1) + 's'; /* 약 55px/s 일정 속도 */
+      track.style.animationTimingFunction = 'linear';
+      track.style.animationIterationCount = 'infinite';
+    }
+
+    build();
+    window.addEventListener('load', build); /* 폰트 로드 후 재계산 */
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt); rt = setTimeout(build, 200);
+    });
+  })();
+
+  /* 킷별 인포그래픽 */
+  var SELLKIT_INFOGRAPHICS = {
+    discount:
+      '<div class="ig-set">' +
+        '<div class="ig-set-panel">' +
+          '<div class="ig-set-title">세트상품 1+1</div>' +
+          '<div class="ig-set-list">' +
+            '<div class="ig-set-row"><span class="ig-set-th">👕</span><span class="ig-set-nm">티셔츠</span><span class="ig-set-pr">20,000</span></div>' +
+            '<div class="ig-set-row"><span class="ig-set-th">👖</span><span class="ig-set-nm">청바지</span><span class="ig-set-free">FREE</span><span class="ig-set-pr strike">15,000</span></div>' +
+          '</div>' +
+          '<div class="ig-set-arrow">↓</div>' +
+          '<div class="ig-set-result"><span class="ig-set-rth">👕</span><span class="ig-set-op">+</span><span class="ig-set-rth">👖</span></div>' +
+          '<div class="ig-set-badge">1+1<br><b>20,000원</b></div>' +
+        '</div>' +
+        '<div class="ig-set-panel">' +
+          '<div class="ig-set-title">카테고리별 N+1</div>' +
+          '<div class="ig-set-list">' +
+            '<div class="ig-set-row"><span class="ig-set-th">💎</span><span class="ig-set-nm">귀걸이</span><span class="ig-set-free">FREE</span><span class="ig-set-pr strike">50,000</span></div>' +
+            '<div class="ig-set-row"><span class="ig-set-th">📿</span><span class="ig-set-nm">목걸이</span><span class="ig-set-pr">65,000</span></div>' +
+            '<div class="ig-set-row"><span class="ig-set-th">💍</span><span class="ig-set-nm">반지</span><span class="ig-set-pr">55,000</span></div>' +
+          '</div>' +
+          '<div class="ig-set-arrow">↓</div>' +
+          '<div class="ig-set-result"><span class="ig-set-rth">💎</span><span class="ig-set-op">+</span><span class="ig-set-rth">📿</span><span class="ig-set-op">+</span><span class="ig-set-rth">💍</span></div>' +
+          '<div class="ig-set-badge">N+1<br><b>115,000원</b></div>' +
+        '</div>' +
+      '</div>',
+    upsell:
+      '<div class="ig-widget">' +
+        '<div class="ig-widget-t">함께 구매하면 좋아요</div>' +
+        '<div class="ig-rec"><div class="ig-thumb"></div><div class="ig-rec-lines"><span class="ig-l w70"></span><span class="ig-l w40"></span></div><span class="ig-add">+</span></div>' +
+        '<div class="ig-rec"><div class="ig-thumb"></div><div class="ig-rec-lines"><span class="ig-l w60"></span><span class="ig-l w30"></span></div><span class="ig-add">+</span></div>' +
+        '<div class="ig-total">장바구니 <b>₩41,000</b><span class="ig-up">▲ 객단가</span></div>' +
+      '</div>',
+    multiship:
+      '<div class="ig-flow">' +
+        '<div class="ig-order">주문 1건</div>' +
+        '<div class="ig-fork"></div>' +
+        '<div class="ig-dests"><span class="ig-dest">서울</span><span class="ig-dest">부산</span><span class="ig-dest">대구</span></div>' +
+      '</div>' +
+      '<div class="ig-cap">한 번의 주문 · <b>여러 배송지</b></div>',
+    review:
+      '<div class="ig-score"><b>4.9</b><div class="ig-stars">★★★★★</div><small>리뷰 1,240개</small></div>' +
+      '<div class="ig-rcard"><div class="ig-stars">★★★★★</div><span class="ig-l w80"></span><span class="ig-l w50"></span></div>',
+    firstbuy:
+      '<div class="fb-scene">' +
+        '<div class="fb-detect">' +
+          '<div class="fb-detect-badge"><span class="fb-detect-ic">✓</span></div>' +
+          '<div class="fb-detect-line">로그인과 동시에 <b>신규 고객</b> 자동 인식</div>' +
+        '</div>' +
+        '<div class="fb-pop">' +
+          '<span class="fb-x" aria-hidden="true">×</span>' +
+          '<span class="fb-badge">신규회원 전용</span>' +
+          '<div class="fb-title">첫 구매 <b>15%</b> 할인</div>' +
+          '<div class="fb-sub">신규 회원만 받는 특별 혜택</div>' +
+          '<div class="fb-prods">' +
+            '<div class="fb-prod"><div class="fb-thumb">🧥</div><span class="fb-was">29,000원</span><span class="fb-now">24,650원</span></div>' +
+            '<div class="fb-prod"><div class="fb-thumb">👟</div><span class="fb-was">19,000원</span><span class="fb-now">16,150원</span></div>' +
+          '</div>' +
+          '<div class="fb-cta">지금 혜택 받기 →</div>' +
+        '</div>' +
+      '</div>'
+  };
+
+  /* 킷 라인업 — 텍스트 + 인포그래픽 2단 카드 */
+  (function () {
+    var html = SELLKIT_KITS.map(function (kit) {
+      var live = kit.status === 'live';
+      var content =
+        '<div class="kit-content">' +
+          '<div class="kit-head">' +
+            '<div class="kit-name-row">' +
+              '<h3>' + kit.name + '</h3>' +
+              (live ? '<span class="kit-status live">지원 중</span>' : '<span class="kit-status soon">준비중</span>') +
+            '</div>' +
+            '<p class="kit-tagline">' + kit.tagline + '</p>' +
+          '</div>' +
+          '<p class="kit-desc">' + kit.desc + '</p>' +
+          '<ul class="kit-points">' + kit.points.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>' +
+          '<div class="kit-foot">' +
+            '<div class="kit-chips">' + kit.chips.map(function (c) { return '<span>' + c + '</span>'; }).join('') + '</div>' +
+            '<span class="kit-go">' + (live ? '자세히 보기 →' : '출시 예정') + '</span>' +
+          '</div>' +
+        '</div>';
+      var visual = '<div class="kit-visual ig-' + kit.id + '">' + (SELLKIT_INFOGRAPHICS[kit.id] || '') + '</div>';
+      var body = content + visual;
+      if (live) return '<a class="kit-row reveal" href="' + kit.path + '">' + body + '</a>';
+      return '<button type="button" class="kit-row is-coming reveal" onclick="sellkitComingSoon()">' + body + '</button>';
+    }).join('');
+    document.getElementById('kitList').innerHTML = html;
+  })();
+
+  /* 목적별 — 좌측 목표 선택 → 우측 패널에 킷 노출 */
+  (function () {
+    var nav = document.getElementById('usecaseNav');
+    var panel = document.getElementById('usecasePanel');
+    if (!nav || !panel) return;
+    var byId = {};
+    SELLKIT_KITS.forEach(function (k) { byId[k.id] = k; });
+    var goals = Array.prototype.slice.call(nav.querySelectorAll('.usecase-goal'));
+
+    function renderPanel(goal) {
+      panel.innerHTML = goal.getAttribute('data-purpose').split('|').map(function (item) {
+        var parts = item.split(':');
+        var kit = byId[parts[0]];
+        var inner = '<span class="kit-chip' + (kit.status === 'coming' ? ' soon' : '') + '">' +
+                      '<span class="kit-chip-ic">' + (SELLKIT_ICONS[kit.icon] || '') + '</span>' + kit.name +
+                    '</span>' +
+                    '<span class="purpose-benefit">' + parts[1] + '</span>' +
+                    '<span class="purpose-arrow">→</span>';
+        if (kit.status === 'live') return '<a class="purpose-link" href="' + kit.path + '">' + inner + '</a>';
+        return '<button type="button" class="purpose-link" onclick="sellkitComingSoon()">' + inner + '</button>';
+      }).join('');
+      panel.classList.remove('is-in');
+      void panel.offsetWidth;
+      panel.classList.add('is-in');
+    }
+
+    goals.forEach(function (g) {
+      g.addEventListener('click', function () {
+        goals.forEach(function (x) { x.classList.remove('is-active'); });
+        g.classList.add('is-active');
+        renderPanel(g);
+      });
+    });
+
+    var active = nav.querySelector('.usecase-goal.is-active') || goals[0];
+    renderPanel(active);
+  })();
+
+  /* FAQ 아코디언 */
+  document.querySelectorAll('.faq-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function (el) {
+        el.classList.remove('open');
+        el.querySelector('.faq-toggle').textContent = '+';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.querySelector('.faq-toggle').textContent = '−';
+      }
+    });
+  });
+
+  /* 스크롤 등장 */
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  })();
+
+  /* HOW IT WORKS 모바일 캐러셀 도트 */
+  (function () {
+    var grid = document.querySelector('.how-grid');
+    var dotsWrap = document.getElementById('howDots');
+    if (!grid || !dotsWrap) return;
+    var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.how-dot'));
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.how-step'));
+    if (!cards.length) return;
+
+    function activeIndex() {
+      var center = grid.scrollLeft + grid.clientWidth / 2;
+      var best = 0, bestDist = Infinity;
+      cards.forEach(function (c, i) {
+        var mid = c.offsetLeft + c.offsetWidth / 2;
+        var d = Math.abs(mid - center);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      return best;
+    }
+    function sync() {
+      var idx = activeIndex();
+      dots.forEach(function (d, i) { d.classList.toggle('is-on', i === idx); });
+    }
+    var raf;
+    grid.addEventListener('scroll', function () {
+      if (raf) return;
+      raf = requestAnimationFrame(function () { raf = null; sync(); });
+    }, { passive: true });
+    dots.forEach(function (d, i) {
+      d.addEventListener('click', function () {
+        var c = cards[i];
+        grid.scrollTo({ left: c.offsetLeft - (grid.clientWidth - c.offsetWidth) / 2, behavior: 'smooth' });
+      });
+    });
+    sync();
+  })();
+</script>
+
+</body>
+</html>

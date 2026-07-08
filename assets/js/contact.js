@@ -1,0 +1,103 @@
+/* ============================================================
+   도입 문의 폼 — 검증 + 제출
+   ============================================================ */
+(function () {
+  var form = document.getElementById('inquiryForm');
+  if (!form) return;
+
+  function $(id) { return document.getElementById(id); }
+
+  /* 연락처 자동 하이픈 */
+  var phone = $('fPhone');
+  phone.addEventListener('input', function () {
+    var v = phone.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 7) v = v.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
+    else if (v.length > 3) v = v.replace(/^(\d{2,3})(\d+)$/, '$1-$2');
+    phone.value = v;
+  });
+
+  /* 전체 동의 */
+  var agreeAll = $('agreeAll');
+  var agrees = [$('agreeTerms'), $('agreePrivacy')];
+  agreeAll.addEventListener('change', function () {
+    agrees.forEach(function (c) { c.checked = agreeAll.checked; });
+  });
+  agrees.forEach(function (c) {
+    c.addEventListener('change', function () {
+      agreeAll.checked = agrees.every(function (x) { return x.checked; });
+    });
+  });
+
+  function invalid(el, msg) {
+    var wrap = el.closest('.form-field');
+    wrap.classList.add('has-error');
+    wrap.querySelector('.field-error').textContent = msg;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    Array.prototype.forEach.call(form.querySelectorAll('.has-error'), function (el) {
+      el.classList.remove('has-error');
+    });
+    $('formGlobalError').style.display = 'none';
+
+    var name = $('fName').value.trim();
+    var email = $('fEmail').value.trim();
+    var phoneVal = phone.value.trim();
+    var category = $('fCategory').value;
+    var message = $('fMessage').value.trim();
+    var ok = true;
+
+    if (!name) { invalid($('fName'), '담당자명을 입력해 주세요.'); ok = false; }
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { invalid($('fEmail'), '올바른 이메일 주소를 입력해 주세요.'); ok = false; }
+    if (phoneVal.replace(/\D/g, '').length < 9) { invalid(phone, '올바른 연락처를 입력해 주세요.'); ok = false; }
+    if (!category) { invalid($('fCategory'), '문의 카테고리를 선택해 주세요.'); ok = false; }
+    if (!message) { invalid($('fMessage'), '문의 내용을 입력해 주세요.'); ok = false; }
+
+    var consentBox = document.querySelector('.consent-box');
+    var agreed = agrees.every(function (c) { return c.checked; });
+    consentBox.classList.toggle('has-error', !agreed);
+    if (!agreed) ok = false;
+
+    if (!ok) {
+      var first = form.querySelector('.has-error');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var btn = $('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '접수 중...';
+
+    submitInquiry({
+      name: name,
+      email: email,
+      phone: phoneVal,
+      category: category,
+      message: message,
+      agreeTerms: true,
+      agreePrivacy: true
+    }).then(function () {
+      form.style.display = 'none';
+      document.querySelector('.contact-head').style.display = 'none';
+      $('formSuccess').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = '문의 접수하기';
+      $('formGlobalError').style.display = 'block';
+    });
+  });
+
+  /* ------------------------------------------------------------
+     API 연동 지점
+     추후 API 문서 수령 후 이 함수 내부만 실제 요청으로 교체하면 됩니다.
+     예) return fetch(API_URL, { method:'POST', headers:{...}, body: JSON.stringify(data) })
+     현재는 0.8초 뒤 성공 처리되는 데모 동작입니다.
+     ------------------------------------------------------------ */
+  function submitInquiry(data) {
+    console.log('[sellkit] 문의 접수 데이터:', data);
+    return new Promise(function (resolve) { setTimeout(resolve, 800); });
+  }
+})();

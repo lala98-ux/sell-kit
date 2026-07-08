@@ -1,0 +1,192 @@
+/* ============================================================
+   sellkit 공통 헤더/푸터 스타일 (킷 랜딩페이지 공용)
+   - sk- 프리픽스로 킷 페이지 기존 스타일과 충돌하지 않음
+   - 브랜드 색 토큰은 각 페이지 :root(할인킷/업셀킷/메인 동일 체계)에서 상속
+   - kits.js → header.js → footer.js 와 함께 사용
+   ============================================================ */
+:root {
+  --header-h: 68px;
+  --warn: #F59E0B;
+}
+
+/* 킷 페이지엔 전역 a 리셋이 없어 헤더/푸터 링크에 밑줄이 생김 → 제거 */
+.sk-header a, .sk-footer a, .sk-mobile a, .sk-drop a { text-decoration: none; }
+/* 킷 페이지엔 button 폰트 상속 리셋이 없어 <button>형 킷 항목(준비중)이 다른 폰트로 보임 → 통일 */
+.sk-nav-link, .sk-drop-item, .sk-mobile-kit, .sk-burger { font-family: inherit; }
+
+/* ---------- 버튼 (헤더 CTA용) ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-weight: 700; border-radius: 12px; border: 0; cursor: pointer;
+  font-family: inherit; text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  font-size: 16px; padding: 17px 36px;
+}
+.btn-sm { font-size: 14px; padding: 10px 20px; border-radius: 10px; }
+.btn-primary {
+  background: var(--brand); color: #fff;
+  box-shadow: 0 8px 20px rgba(var(--brand-rgb), .28);
+}
+@media (hover: hover) {
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary:hover { background: var(--brand); filter: brightness(1.08) saturate(1.05); box-shadow: 0 12px 28px rgba(var(--brand-rgb), .42); }
+}
+
+/* ---------- 헤더 ---------- */
+.sk-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255, 255, 255, .86);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s, box-shadow .2s;
+}
+.sk-header.scrolled { border-color: var(--border); box-shadow: 0 4px 24px rgba(15, 10, 30, .06); }
+.sk-header-inner {
+  max-width: 1180px; margin: 0 auto; padding: 0 40px;
+  height: var(--header-h); display: flex; align-items: center; gap: 40px;
+}
+/* 고정 헤더가 콘텐츠를 가리지 않도록 킷 페이지에 넣는 여백 */
+.sk-header-spacer { height: var(--header-h); }
+.sk-logo {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 22px; font-weight: 900; color: var(--dark); letter-spacing: -0.04em;
+  line-height: 1;
+}
+.sk-logo img { height: 48px; width: 48px; object-fit: contain; margin: -6px 0; }
+.sk-logo span { color: var(--brand); }
+
+/* 현재 킷 페이지 표시 — 로고 옆 뱃지 */
+.sk-brand { display: inline-flex; align-items: center; gap: 10px; }
+.sk-kit-badge {
+  display: inline-flex; align-items: center; padding: 4px 11px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.4;
+  color: var(--brand); background: rgba(var(--brand-rgb), .09); border-radius: 8px;
+}
+/* 드롭다운·모바일 메뉴에서 현재 킷 강조 */
+.sk-here {
+  font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .01em;
+  color: #0E9A6C; background: rgba(16, 185, 129, .13);
+  border-radius: 6px; padding: 2px 7px; line-height: 1.5;
+}
+.sk-drop-item.is-current { background: var(--bg-subtle); }
+.sk-drop-item.is-current .sk-kit-txt strong { color: var(--brand); }
+.sk-drop:hover .sk-drop-item.is-current { opacity: 1; }
+.sk-mobile-kit.is-current { background: var(--bg-subtle); border-color: var(--brand); }
+
+.sk-nav { display: flex; align-items: center; gap: 6px; flex: 1; }
+.sk-nav-item { position: relative; }
+.sk-nav-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 16px; border-radius: 10px; border: 0; background: none;
+  font-size: 15.5px; font-weight: 700; color: var(--body);
+  transition: color .15s, background .15s;
+}
+.sk-nav-link:hover { color: var(--brand); background: var(--bg-subtle); }
+.sk-nav-link.active, .sk-nav-item.active > .sk-nav-link { color: var(--brand); }
+.sk-ext { font-size: 12px; opacity: .7; }
+.sk-caret { transition: transform .2s; }
+.sk-has-drop:hover .sk-caret, .sk-has-drop.drop-open .sk-caret { transform: rotate(180deg); }
+
+/* Kit 드롭다운 */
+.sk-drop {
+  position: fixed; top: var(--header-h); left: 0; right: 0;
+  background: #fff; border-bottom: 1px solid var(--border);
+  box-shadow: 0 22px 40px rgba(15, 10, 30, .07);
+  padding: 18px max(40px, calc((100% - 1100px) / 2)); display: flex; justify-content: space-between; gap: 6px;
+  opacity: 0; visibility: hidden; transform: translateY(-12px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+.sk-has-drop:hover .sk-drop, .sk-has-drop.drop-open .sk-drop {
+  opacity: 1; visibility: visible; transform: none;
+}
+.sk-drop-item {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 5px;
+  text-align: left; padding: 14px 16px;
+  border-radius: 12px; border: 0; background: none;
+  transition: background .18s, opacity .18s, transform .18s;
+}
+.sk-drop-item .sk-kit-txt strong,
+.sk-drop-item .sk-kit-txt small { white-space: nowrap; transition: color .18s; }
+.sk-drop:hover .sk-drop-item { opacity: .45; }
+.sk-drop:hover .sk-drop-item:hover { opacity: 1; }
+.sk-drop-item:hover { background: var(--bg-subtle); transform: translateY(-2px); }
+.sk-drop-item:hover .sk-kit-txt strong { color: var(--brand); }
+.sk-drop-item:hover .sk-kit-txt small { color: var(--body); }
+.sk-kit-txt { display: flex; flex-direction: column; gap: 4px; line-height: 1.35; }
+.sk-kit-txt strong { font-size: 15px; color: var(--dark); font-weight: 800; letter-spacing: -0.01em; display: flex; align-items: center; gap: 6px; }
+.sk-kit-txt small { font-size: 12.5px; color: var(--muted); }
+.sk-drop-item.is-coming .sk-kit-txt strong { color: var(--muted); }
+.sk-soon {
+  font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .01em; color: var(--muted);
+  background: rgba(139, 134, 160, .14); border-radius: 6px; padding: 2px 7px; line-height: 1.5;
+}
+.sk-header-right { display: flex; align-items: center; gap: 10px; }
+
+/* 햄버거 */
+.sk-burger { display: none; width: 44px; height: 44px; border: 0; background: none; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+.sk-burger span { width: 20px; height: 2px; background: var(--dark); border-radius: 2px; transition: transform .25s, opacity .25s; }
+.menu-open .sk-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-open .sk-burger span:nth-child(2) { opacity: 0; }
+.menu-open .sk-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* 모바일 메뉴 — 헤더 아래 전체 화면을 덮는 패널 */
+.sk-mobile {
+  display: none; background: #fff;
+  position: fixed; left: 0; right: 0; top: var(--header-h); bottom: 0;
+  z-index: 99; padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  border-top: 1px solid var(--border);
+}
+.sk-mobile.open { display: flex; flex-direction: column; }
+.sk-mobile-group { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--brand); text-transform: uppercase; margin: 6px 4px 12px; }
+.sk-mobile-kit {
+  display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+  gap: 12px; width: 100%; padding: 15px 16px; margin-bottom: 8px; text-align: left;
+  border: 1px solid var(--border); border-left: 3px solid var(--brand); border-radius: 14px;
+  background: #fff;
+}
+.sk-mobile-kit .sk-kit-txt { gap: 3px; }
+.sk-mobile-kit .sk-kit-txt strong { font-size: 16px; color: var(--brand); }
+.sk-mobile-kit .sk-kit-txt small { font-size: 13px; }
+.sk-mobile-kit:not(.is-coming)::after {
+  content: "→"; flex: none; font-size: 18px; font-weight: 800; color: var(--brand);
+}
+.sk-mobile-kit.is-coming { border-left-color: var(--border); }
+.sk-mobile-kit.is-coming .sk-kit-txt strong { color: var(--muted); }
+.sk-mobile-link { display: block; padding: 14px 4px; margin-top: 6px; font-size: 16px; font-weight: 700; color: var(--dark); border-top: 1px solid var(--bg-subtle); }
+.sk-mobile-link.active { color: var(--brand); }
+.sk-mobile-cta { display: flex; width: 100%; margin-top: auto; }
+
+@media (max-width: 960px) {
+  .sk-nav, .sk-header-cta { display: none; }
+  .sk-header-inner { gap: 0; justify-content: space-between; }
+  .sk-burger { display: flex; }
+}
+
+/* ---------- 푸터 ---------- */
+.sk-footer { background: var(--dark); color: rgba(255, 255, 255, .68); font-size: 14px; border-top: 1px solid rgba(255,255,255,.08); }
+.sk-footer-inner { max-width: 1180px; margin: 0 auto; padding: 64px 40px 40px; }
+.sk-footer-top { padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+.sk-footer-line {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap; margin-top: 16px;
+}
+.sk-footer-logo {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 21px; font-weight: 900; color: #fff; letter-spacing: -0.04em;
+}
+.sk-footer-logo img { height: 52px; width: 52px; object-fit: contain; margin: -8px 0; }
+.sk-footer-logo span { color: var(--brand-mid); }
+.sk-footer-policy { display: flex; align-items: center; gap: 10px; }
+.sk-footer-policy a {
+  color: rgba(255, 255, 255, .82); background: none; border: 0;
+  font-size: 13.5px; font-weight: 700; padding: 0; transition: color .15s;
+}
+.sk-footer-policy a:hover { color: #fff; }
+.sk-footer-policy-sep { color: rgba(255, 255, 255, .3); }
+.sk-footer-biz { padding: 32px 0 0; line-height: 1.9; }
+.sk-footer-copy { margin-top: 20px; font-size: 12.5px; color: rgba(255, 255, 255, .38); }
+
+@media (max-width: 600px) {
+  .sk-header-inner, .sk-footer-inner { padding-left: 24px; padding-right: 24px; }
+}
