@@ -28,6 +28,56 @@
     });
   });
 
+  /* 문의할 킷 다중선택 (전체 선택 지원) */
+  var kitSelect = $('kitSelect');
+  var kitChips = [];
+  var allChip = null;
+  if (kitSelect && typeof SELLKIT_KITS !== 'undefined') {
+    allChip = document.createElement('button');
+    allChip.type = 'button';
+    allChip.className = 'kit-sel-chip kit-sel-all';
+    allChip.textContent = '전체 선택';
+    kitSelect.appendChild(allChip);
+
+    SELLKIT_KITS.forEach(function (k) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'kit-sel-chip';
+      b.setAttribute('data-kit', k.name);
+      b.setAttribute('aria-pressed', 'false');
+      b.textContent = k.name;
+      kitSelect.appendChild(b);
+      kitChips.push(b);
+    });
+
+    function syncAll() {
+      var all = kitChips.length && kitChips.every(function (c) { return c.classList.contains('is-sel'); });
+      allChip.classList.toggle('is-sel', all);
+      allChip.setAttribute('aria-pressed', all ? 'true' : 'false');
+      var wrap = kitSelect.closest('.form-field');
+      if (wrap && selectedKits().length) wrap.classList.remove('has-error');
+    }
+    allChip.addEventListener('click', function () {
+      var turnOn = !kitChips.every(function (c) { return c.classList.contains('is-sel'); });
+      kitChips.forEach(function (c) {
+        c.classList.toggle('is-sel', turnOn);
+        c.setAttribute('aria-pressed', turnOn ? 'true' : 'false');
+      });
+      syncAll();
+    });
+    kitChips.forEach(function (c) {
+      c.addEventListener('click', function () {
+        var on = c.classList.toggle('is-sel');
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        syncAll();
+      });
+    });
+  }
+  function selectedKits() {
+    return kitChips.filter(function (c) { return c.classList.contains('is-sel'); })
+                   .map(function (c) { return c.getAttribute('data-kit'); });
+  }
+
   function invalid(el, msg) {
     var wrap = el.closest('.form-field');
     wrap.classList.add('has-error');
@@ -52,6 +102,7 @@
     if (!name) { invalid($('fName'), '담당자명을 입력해 주세요.'); ok = false; }
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { invalid($('fEmail'), '올바른 이메일 주소를 입력해 주세요.'); ok = false; }
     if (phoneVal.replace(/\D/g, '').length < 9) { invalid(phone, '올바른 연락처를 입력해 주세요.'); ok = false; }
+    if (kitSelect && selectedKits().length === 0) { invalid(kitSelect, '문의할 킷을 하나 이상 선택해 주세요.'); ok = false; }
     if (!category) { invalid($('fCategory'), '문의 카테고리를 선택해 주세요.'); ok = false; }
     if (!message) { invalid($('fMessage'), '문의 내용을 입력해 주세요.'); ok = false; }
 
@@ -74,6 +125,7 @@
       name: name,
       email: email,
       phone: phoneVal,
+      kits: selectedKits(),
       category: category,
       message: message,
       agreeTerms: true,

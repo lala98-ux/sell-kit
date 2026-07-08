@@ -42,3 +42,46 @@
     render();
   }
 })();
+
+/* ============================================================
+   도입 문의 플로팅 버튼 (우측 하단)
+   - 문의 페이지(contact.html) 제외한 모든 페이지에 노출
+   - 스타일 자체 주입 → 메인/랜딩 어느 CSS든 동일하게 표시
+   ============================================================ */
+(function () {
+  var R = SELLKIT_ROOT;
+  if (/contact\.html$/i.test(location.pathname)) return;
+
+  var css =
+    '.sk-fab{position:fixed;right:24px;bottom:24px;z-index:90;display:inline-flex;align-items:center;gap:8px;' +
+    'padding:14px 20px;border-radius:999px;background:var(--brand);color:#fff;font-family:inherit;font-size:15px;font-weight:800;' +
+    'text-decoration:none;box-shadow:0 10px 28px rgba(var(--brand-rgb),.4);' +
+    'transform:translateY(12px);opacity:0;transition:transform .3s ease,opacity .3s ease,box-shadow .2s ease,background .2s ease;}' +
+    '.sk-fab.show{transform:none;opacity:1;}' +
+    '.sk-fab svg{width:20px;height:20px;flex:none;}' +
+    '@media (hover:hover){.sk-fab:hover{box-shadow:0 14px 34px rgba(var(--brand-rgb),.52);filter:brightness(1.05);}}' +
+    '@media (max-width:600px){.sk-fab{right:16px;bottom:16px;padding:13px 18px;font-size:14px;}}';
+
+  var style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
+
+  var a = document.createElement('a');
+  a.className = 'sk-fab';
+  a.href = R + 'contact.html';
+  a.setAttribute('aria-label', '도입 문의');
+  a.innerHTML =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>' +
+    '</svg><span>도입 문의</span>';
+
+  function mount() {
+    document.body.appendChild(a);
+    requestAnimationFrame(function () { a.classList.add('show'); });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mount);
+  } else {
+    mount();
+  }
+})();

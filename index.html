@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260708p">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260708al">
 </head>
 <body>
 
@@ -251,8 +251,12 @@
     </div>
     <div class="kit-list" id="kitList"></div>
     <div class="kit-more reveal">
-      <span class="kit-more-label">+ NEXT KIT</span>
-      새로운 킷을 계속 만들고 있어요. 필요한 기능이 있다면 <a href="contact.html">먼저 말씀해 주세요</a>.
+      <div class="kit-more-txt">
+        <span class="kit-more-label">+ NEXT KIT</span>
+        <h3 class="kit-more-title">찾는 기능이 없으신가요?</h3>
+        <p class="kit-more-sub">필요한 기능을 알려주시면 다음 킷 후보로 먼저 검토해요.</p>
+      </div>
+      <a class="btn btn-primary kit-more-btn" href="contact.html">기능 제안하기 →</a>
     </div>
   </div>
 </section>
@@ -540,7 +544,7 @@
     var ALL = cards.map(function (_, i) { return i; });
     var active = 0, t1 = null, t2 = null;
     var ANIM = 8000, PAUSE = 1000, CYCLE = ANIM + PAUSE; /* 애니 8s + 1s 쉼 */
-    var mq = window.matchMedia('(max-width: 768px)');
+    var mq = window.matchMedia('(max-width: 1000px)');
 
     var dots = cards.map(function (_, i) {
       var d = document.createElement('button');
@@ -680,22 +684,46 @@
         '</div>' +
       '</div>',
     upsell:
-      '<div class="ig-widget">' +
-        '<div class="ig-widget-t">함께 구매하면 좋아요</div>' +
-        '<div class="ig-rec"><div class="ig-thumb"></div><div class="ig-rec-lines"><span class="ig-l w70"></span><span class="ig-l w40"></span></div><span class="ig-add">+</span></div>' +
-        '<div class="ig-rec"><div class="ig-thumb"></div><div class="ig-rec-lines"><span class="ig-l w60"></span><span class="ig-l w30"></span></div><span class="ig-add">+</span></div>' +
-        '<div class="ig-total">장바구니 <b>₩41,000</b><span class="ig-up">▲ 객단가</span></div>' +
+      '<div class="up3">' +
+        '<div class="up3-ship">' +
+          '<div class="up3-ship-top">' +
+            '<span class="up3-ship-msg">무료배송까지 <b>7,000원!</b></span>' +
+            '<span class="up3-ship-done">🎉 무료배송 달성!</span>' +
+          '</div>' +
+          '<div class="up3-track"><div class="up3-fill"></div></div>' +
+        '</div>' +
+        '<div class="up3-prod">' +
+          '<div class="up3-thumb">🧴<span class="up3-off">20%<br>OFF</span></div>' +
+          '<div class="up3-info">' +
+            '<span class="up3-name">프리미엄 섬유유연제</span>' +
+            '<span class="up3-prices"><b>12,000원</b><s>15,000</s></span>' +
+          '</div>' +
+          '<span class="up3-add">담기</span>' +
+          '<span class="up3-plus">+1</span>' +
+        '</div>' +
       '</div>',
     multiship:
-      '<div class="ig-flow">' +
-        '<div class="ig-order">주문 1건</div>' +
-        '<div class="ig-fork"></div>' +
-        '<div class="ig-dests"><span class="ig-dest">서울</span><span class="ig-dest">부산</span><span class="ig-dest">대구</span></div>' +
-      '</div>' +
-      '<div class="ig-cap">한 번의 주문 · <b>여러 배송지</b></div>',
+      '<div class="mx">' +
+        '<div class="mx-order"><span class="mx-oic">📋</span>주문서 <b>1건</b><span class="mx-ocnt">상품 27개</span></div>' +
+        '<div class="mx-excel"><span class="mx-xls">XLS</span><span class="mx-xtxt">엑셀 일괄 등록</span><span class="mx-xup">업로드</span></div>' +
+        '<div class="mx-arrow">↓</div>' +
+        '<div class="mx-list">' +
+          '<div class="mx-drow"><span class="mx-dno">1</span><span class="mx-dnm">홍길동</span><span class="mx-daddr">서울 강남구</span></div>' +
+          '<div class="mx-drow"><span class="mx-dno">2</span><span class="mx-dnm">김셀킷</span><span class="mx-daddr">부산 해운대구</span></div>' +
+          '<div class="mx-drow"><span class="mx-dno">3</span><span class="mx-dnm">엔트위즈</span><span class="mx-daddr">대구 중구</span></div>' +
+        '</div>' +
+        '<div class="mx-more"><span></span><span></span><span></span></div>' +
+        '<div class="mx-done"><span class="mx-check">✓</span>업로드된 배송지 27건 일괄 분할</div>' +
+      '</div>',
     review:
-      '<div class="ig-score"><b>4.9</b><div class="ig-stars">★★★★★</div><small>리뷰 1,240개</small></div>' +
-      '<div class="ig-rcard"><div class="ig-stars">★★★★★</div><span class="ig-l w80"></span><span class="ig-l w50"></span></div>',
+      '<div class="rv3">' +
+        '<div class="rv3-score"><b>4.9</b><span class="rv3-stars">★★★★★</span><span class="rv3-total"><span class="rv3-tnow">리뷰 1,240개</span><span class="rv3-tdown">리뷰 1,239개</span></span></div>' +
+        '<div class="rv3-list">' +
+          '<div class="rv3-item rv3-normal"><span class="rv3-av">🙂</span><span class="rv3-mini">★★★★☆</span><span class="rv3-tx"></span></div>' +
+          '<div class="rv3-item rv3-reco"><span class="rv3-av">😍</span><span class="rv3-mini">★★★★★</span><span class="rv3-tx"></span><span class="rv3-tag rv3-b">추천리뷰</span></div>' +
+          '<div class="rv3-item rv3-block"><span class="rv3-av">🤬</span><span class="rv3-mini">★☆☆☆☆</span><span class="rv3-tx"></span><span class="rv3-tag rv3-r">차단리뷰</span></div>' +
+        '</div>' +
+      '</div>',
     firstbuy:
       '<div class="fb-scene">' +
         '<div class="fb-detect">' +
@@ -733,13 +761,14 @@
           '<ul class="kit-points">' + kit.points.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>' +
           '<div class="kit-foot">' +
             '<div class="kit-chips">' + kit.chips.map(function (c) { return '<span>' + c + '</span>'; }).join('') + '</div>' +
-            '<span class="kit-go">' + (live ? '자세히 보기 →' : '출시 예정') + '</span>' +
+            (live
+              ? '<a class="kit-go" href="' + kit.path + '">자세히 보기 →</a>'
+              : '<button type="button" class="kit-go" onclick="sellkitComingSoon()">출시 예정</button>') +
           '</div>' +
         '</div>';
       var visual = '<div class="kit-visual ig-' + kit.id + '">' + (SELLKIT_INFOGRAPHICS[kit.id] || '') + '</div>';
       var body = content + visual;
-      if (live) return '<a class="kit-row reveal" href="' + kit.path + '">' + body + '</a>';
-      return '<button type="button" class="kit-row is-coming reveal" onclick="sellkitComingSoon()">' + body + '</button>';
+      return '<div class="kit-row reveal' + (live ? '' : ' is-coming') + '">' + body + '</div>';
     }).join('');
     document.getElementById('kitList').innerHTML = html;
   })();

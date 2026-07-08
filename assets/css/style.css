@@ -295,8 +295,8 @@ section { padding: 96px 0; }
 .deck-dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; background: var(--border); cursor: pointer; transition: background .2s, width .2s; }
 .deck-dot.is-on { background: var(--brand); width: 22px; }
 
-/* 모바일/좁은 태블릿: 한 장만 노출 + 스와이프 */
-@media (max-width: 768px) {
+/* 1000px 이하: 인포그래픽 캐러셀(한 장 노출 + 스와이프) */
+@media (max-width: 1000px) {
   .hero-visual { max-width: 380px; margin-top: 60px; }
   .deck { display: block; position: relative; height: 420px; padding-top: 0; gap: 0; }
   .deck-card {
@@ -305,9 +305,12 @@ section { padding: 96px 0; }
   }
   .deck-card.pos-0 { opacity: 1; z-index: 3; }
   .deck-card.pos-1, .deck-card.pos-2 { opacity: 0; z-index: 1; pointer-events: none; }
-  /* 모바일: 현재 보이는 카드 태그는 찐파 */
+  /* 현재 보이는 카드 태그는 찐파 */
   .deck-card.pos-0 .kit-tag { background: var(--brand); color: #fff; box-shadow: 0 6px 16px rgba(var(--brand-rgb), .3); }
   .deck-dots { display: flex; }
+}
+
+@media (max-width: 768px) {
   /* 모바일: 데스크톱용 강제 줄바꿈 해제 + 정렬 자연스럽게 */
   .br-pc { display: none; }
   /* 모바일 영역별 타이틀·서브 스펙 고정 */
@@ -676,6 +679,7 @@ section { padding: 96px 0; }
 .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .pain-card {
   position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
   background: var(--bg-subtle); border-radius: var(--radius-lg);
   border: 1px solid transparent;
   padding: 34px 30px 30px;
@@ -692,7 +696,7 @@ section { padding: 96px 0; }
 .pain-card h3 { font-size: 18.5px; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
 .pain-card p { font-size: 15px; color: var(--muted); }
 .pain-fix {
-  display: inline-block; margin-top: 18px;
+  align-self: flex-start; margin-top: auto; padding-top: 18px;
   font-size: 13.5px; font-weight: 700; color: var(--brand);
   text-decoration: none;
   opacity: .75; transition: opacity .3s ease, transform .3s ease;
@@ -719,7 +723,7 @@ section { padding: 96px 0; }
   padding: 44px 48px;
   transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
-a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); box-shadow: 0 20px 46px rgba(var(--brand-rgb), .12); }
+.kit-row:hover { border-color: var(--brand-mid); box-shadow: 0 16px 40px rgba(var(--brand-rgb), .1); }
 /* 행 교차: 짝수 행은 인포그래픽을 왼쪽으로 */
 .kit-row:nth-child(even) .kit-visual { order: -1; }
 
@@ -746,9 +750,15 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
   background: #EAF3FF; border: 1px solid #D3E4FF;
   border-radius: 8px; padding: 4px 11px; white-space: nowrap;
 }
-.kit-go { font-size: 15px; font-weight: 800; color: var(--brand); white-space: nowrap; }
+.kit-go {
+  font-size: 15px; font-weight: 800; color: var(--brand); white-space: nowrap;
+  border: 0; background: none; font-family: inherit; cursor: pointer;
+  display: inline-flex; align-items: center; text-decoration: none; padding: 0;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.kit-go:hover { transform: translateX(3px); }
 
-.kit-row.is-coming { border-style: dashed; cursor: pointer; }
+.kit-row.is-coming { border-style: dashed; }
 .kit-row.is-coming .kit-go { color: var(--muted); font-weight: 600; }
 
 /* ---------- 킷 인포그래픽 영역 ---------- */
@@ -865,32 +875,245 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
   .kit-row.visible .ig-set-result .ig-set-rth { animation: none !important; }
 }
 
-/* 업셀킷 — 함께구매 / 객단가 */
-.ig-widget { width: 100%; max-width: 260px; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 12px 30px rgba(15,10,30,.06); }
-.ig-widget-t { font-size: 13px; font-weight: 800; color: var(--dark); margin-bottom: 12px; }
-.ig-rec { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-.ig-thumb { width: 38px; height: 38px; border-radius: 9px; background: linear-gradient(135deg, var(--brand-light), #EAF1FE); border: 1px solid var(--border); flex: none; }
-.ig-rec-lines { flex: 1; display: grid; gap: 6px; }
-.ig-add { width: 24px; height: 24px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none; }
-.ig-total { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 12.5px; font-weight: 700; color: var(--body); }
-.ig-total b { font-size: 15px; color: var(--dark); }
-.ig-up { color: var(--success); font-weight: 800; }
+/* 업셀킷 — 담기 → 무료배송 도달 스토리 애니메이션 */
+.up3 { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+/* 상품(할인가 강조) 카드 */
+.up3-prod {
+  position: relative; display: flex; align-items: center; gap: 14px;
+  background: #fff; border-radius: 16px; padding: 16px 18px; box-shadow: 0 8px 22px rgba(15, 10, 30, .1);
+}
+.up3-thumb {
+  position: relative; width: 58px; height: 58px; border-radius: 13px; flex: none;
+  display: flex; align-items: center; justify-content: center; font-size: 30px;
+  background: linear-gradient(135deg, var(--brand-light), #EAF1FE);
+}
+.up3-off {
+  position: absolute; top: -9px; left: -9px; width: 36px; height: 36px; border-radius: 50%;
+  background: #F0353F; color: #fff; font-size: 9.5px; font-weight: 800; line-height: 1.05;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  box-shadow: 0 3px 10px rgba(240, 53, 63, .45);
+}
+.up3-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.up3-name { font-size: 14.5px; font-weight: 700; color: var(--dark); }
+.up3-prices { display: flex; align-items: baseline; gap: 7px; }
+.up3-prices b { font-size: 19px; font-weight: 800; color: var(--dark); }
+.up3-prices s { font-size: 12.5px; color: var(--muted); }
+.up3-add {
+  flex: none; font-size: 13.5px; font-weight: 800; color: #fff; background: var(--brand);
+  border-radius: 11px; padding: 10px 16px; box-shadow: 0 5px 14px rgba(var(--brand-rgb), .32);
+}
+.up3-plus {
+  position: absolute; top: 10px; right: 20px; font-size: 13px; font-weight: 800; color: #fff;
+  background: #F0353F; border-radius: 999px; padding: 3px 10px; opacity: 0;
+  box-shadow: 0 4px 10px rgba(240, 53, 63, .4);
+}
+/* 무료배송 진행도 */
+.up3-ship { background: var(--bg-subtle); border-radius: 16px; padding: 16px 18px; }
+.up3-ship-top { position: relative; height: 22px; margin-bottom: 12px; }
+.up3-ship-msg, .up3-ship-done { position: absolute; left: 0; top: 0; font-size: 14.5px; font-weight: 700; white-space: nowrap; }
+.up3-ship-msg { color: var(--body); }
+.up3-ship-msg b { color: var(--brand); }
+.up3-ship-done { color: var(--success); opacity: 0; }
+.up3-track { height: 11px; border-radius: 999px; background: #E4EAF6; overflow: hidden; }
+.up3-fill { height: 100%; width: 55%; border-radius: 999px; background: linear-gradient(90deg, var(--brand), #3B7BFF); }
 
-/* 멀티배송킷 — 배송지 분할 */
-.ig-flow { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; }
-.ig-order { background: var(--brand); color: #fff; font-size: 13px; font-weight: 800; border-radius: 10px; padding: 10px 22px; }
-.ig-fork { width: 1px; height: 18px; background: var(--border); }
-.ig-dests { display: flex; gap: 10px; }
-.ig-dest { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 7px 13px; font-size: 12px; font-weight: 700; color: var(--body); }
-.ig-dest::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-mid); }
+/* --- 애니메이션 (스크롤 진입 시 5s 루프) --- */
+.kit-row.visible .up3-add { animation: up3-add 5s ease-in-out infinite; }
+.kit-row.visible .up3-plus { animation: up3-plus 5s ease-in-out infinite; }
+.kit-row.visible .up3-fill { animation: up3-fill 5s ease-in-out infinite; }
+.kit-row.visible .up3-ship-msg { animation: up3-msg 5s ease-in-out infinite; }
+.kit-row.visible .up3-ship-done { animation: up3-done 5s ease-in-out infinite; }
+@keyframes up3-add {
+  0%, 26% { transform: scale(1); }
+  31% { transform: scale(.86); }
+  36%, 100% { transform: scale(1); }
+}
+@keyframes up3-plus {
+  0%, 33% { opacity: 0; transform: translateY(2px) scale(.6); }
+  39% { opacity: 1; transform: translateY(-4px) scale(1.15); }
+  45% { opacity: 1; transform: translateY(-8px) scale(1); }
+  58% { opacity: .9; transform: translateY(-20px) scale(1); }
+  70%, 100% { opacity: 0; transform: translateY(-34px) scale(.95); }
+}
+@keyframes up3-fill {
+  0%, 40% { width: 55%; background: linear-gradient(90deg, var(--brand), #3B7BFF); }
+  70% { width: 100%; background: linear-gradient(90deg, var(--brand), #3B7BFF); }
+  76%, 100% { width: 100%; background: linear-gradient(90deg, #12B886, #0CA678); }
+}
+@keyframes up3-msg {
+  0%, 60% { opacity: 1; }
+  66%, 100% { opacity: 0; }
+}
+@keyframes up3-done {
+  0%, 62% { opacity: 0; transform: scale(.8); }
+  70% { opacity: 1; transform: scale(1.08); }
+  75%, 100% { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kit-row.visible .up3-add,
+  .kit-row.visible .up3-plus,
+  .kit-row.visible .up3-fill,
+  .kit-row.visible .up3-ship-msg,
+  .kit-row.visible .up3-ship-done { animation: none !important; }
+  .up3-fill { width: 100%; }
+  .up3-plus { opacity: 1; }
+}
 
-/* 리뷰킷 — 별점 / 리뷰카드 */
-.ig-score { text-align: center; }
-.ig-score b { font-size: 34px; font-weight: 800; color: var(--dark); letter-spacing: -1px; }
+/* 멀티배송킷 — 주문서 → 엑셀 일괄등록 → 배송지 리스트 자동 생성 (세로 플로우) */
+.mx { width: 100%; max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+.mx-order {
+  display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 800; color: var(--dark);
+  background: #fff; border-radius: 11px; padding: 10px 13px; box-shadow: 0 3px 10px rgba(15, 10, 30, .07);
+}
+.mx-oic { font-size: 15px; }
+.mx-order b { color: var(--brand); }
+.mx-ocnt { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--muted); }
+.mx-excel {
+  display: flex; align-items: center; gap: 9px; font-size: 12.5px; font-weight: 800; color: var(--dark);
+  background: #fff; border: 1.5px dashed var(--brand-mid); border-radius: 11px; padding: 10px 13px;
+}
+.mx-xls { font-size: 8.5px; font-weight: 800; color: #fff; background: #12B886; border-radius: 4px; padding: 2px 6px; letter-spacing: .03em; }
+.mx-xtxt { flex: 1; }
+.mx-xup { font-size: 10.5px; font-weight: 800; color: #fff; background: var(--brand); border-radius: 8px; padding: 6px 13px; box-shadow: 0 4px 11px rgba(var(--brand-rgb), .32); transform-origin: center; }
+.mx-arrow { text-align: center; font-size: 15px; color: var(--brand-mid); line-height: .5; }
+.mx-list { display: flex; flex-direction: column; gap: 6px; }
+.mx-drow {
+  display: flex; align-items: center; gap: 9px;
+  background: #fff; border-radius: 10px; padding: 8px 11px; box-shadow: 0 3px 10px rgba(15, 10, 30, .07);
+}
+.mx-dno { width: 19px; height: 19px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex: none; }
+.mx-dnm { font-size: 12px; font-weight: 700; color: var(--dark); }
+.mx-daddr { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--muted); }
+.mx-more { display: flex; flex-direction: column; align-items: center; gap: 3px; margin: 1px 0; }
+.mx-more span { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); opacity: .55; }
+.mx-done {
+  align-self: center; display: inline-flex; align-items: center; gap: 5px; margin-top: 2px;
+  font-size: 12px; font-weight: 800; color: var(--brand); background: rgba(var(--brand-rgb), .1); border-radius: 999px; padding: 6px 15px;
+}
+.mx-check { font-weight: 900; }
+
+/* --- 애니메이션 (스크롤 진입 시 5s 루프) --- */
+.kit-row.visible .mx-excel { animation: mx-xup 5s ease-in-out infinite; }
+.kit-row.visible .mx-xup { animation: mx-chip 5s ease-in-out infinite; }
+.kit-row.visible .mx-arrow { animation: mx-arrow 5s ease-in-out infinite; }
+.kit-row.visible .mx-drow { opacity: 0; animation: mx-gen 5s ease-in-out infinite; }
+.kit-row.visible .mx-drow:nth-of-type(1) { animation-delay: 0s; }
+.kit-row.visible .mx-drow:nth-of-type(2) { animation-delay: .18s; }
+.kit-row.visible .mx-drow:nth-of-type(3) { animation-delay: .36s; }
+.kit-row.visible .mx-done { animation: mx-done 5s ease-in-out infinite; }
+@keyframes mx-xup {
+  0%, 6% { border-color: var(--brand-mid); box-shadow: none; }
+  12% { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(var(--brand-rgb), .14); }
+  20%, 100% { border-color: var(--brand-mid); box-shadow: none; }
+}
+@keyframes mx-chip {
+  0%, 8% { transform: scale(1); box-shadow: 0 4px 11px rgba(var(--brand-rgb), .32); }
+  12% { transform: scale(.86); box-shadow: 0 2px 6px rgba(var(--brand-rgb), .3); }
+  17% { transform: scale(1.06); }
+  23%, 100% { transform: scale(1); box-shadow: 0 4px 11px rgba(var(--brand-rgb), .32); }
+}
+@keyframes mx-arrow {
+  0%, 14% { opacity: .3; }
+  20% { opacity: 1; transform: translateY(2px); }
+  28%, 100% { opacity: 1; transform: none; }
+}
+@keyframes mx-gen {
+  0%, 16% { opacity: 0; transform: translateY(7px); }
+  26% { opacity: 1; transform: none; }
+  92% { opacity: 1; transform: none; }
+  97%, 100% { opacity: 0; }
+}
+@keyframes mx-done {
+  0%, 46% { opacity: 0; transform: scale(.8); }
+  54% { opacity: 1; transform: scale(1.1); }
+  60%, 100% { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kit-row.visible .mx-excel,
+  .kit-row.visible .mx-xup,
+  .kit-row.visible .mx-arrow,
+  .kit-row.visible .mx-drow,
+  .kit-row.visible .mx-done { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* 리뷰킷 — 총점 + 리뷰 리스트 (추천 상승 / 차단 제거 애니메이션) */
 .ig-stars { color: #FBBF24; font-size: 15px; letter-spacing: 2px; }
-.ig-score small { display: block; font-size: 11.5px; font-weight: 700; color: var(--muted); margin-top: 2px; }
-.ig-rcard { width: 100%; max-width: 240px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 13px 15px; display: grid; gap: 7px; }
-.ig-rcard .ig-stars { font-size: 12px; }
+.rv3 { width: 100%; max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.rv3-score { display: flex; align-items: baseline; gap: 9px; }
+.rv3-score b { font-size: 30px; font-weight: 800; color: var(--dark); letter-spacing: -1px; }
+.rv3-stars { color: #FBBF24; font-size: 14px; letter-spacing: 1px; }
+.rv3-total { margin-left: auto; position: relative; font-size: 11.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.rv3-tdown { position: absolute; right: 0; top: 0; opacity: 0; }
+.rv3-list { display: flex; flex-direction: column; overflow: hidden; padding: 8px; margin: -8px; }
+.rv3-item {
+  position: relative; display: flex; align-items: center; gap: 9px; height: 40px; margin-bottom: 8px; box-sizing: border-box;
+  background: #fff; border-radius: 10px; padding: 0 12px; box-shadow: 0 2px 6px rgba(15, 10, 30, .06);
+}
+.rv3-item:last-child { margin-bottom: 0; }
+.rv3-av { font-size: 17px; flex: none; }
+.rv3-mini { color: #FBBF24; font-size: 10px; letter-spacing: .5px; flex: none; }
+.rv3-tx { flex: 1; height: 7px; border-radius: 4px; background: #E4EAF6; margin-right: 52px; }
+/* 태그: 행 우측 중앙, 처음엔 숨김 → 나중에 달림 */
+.rv3-tag {
+  position: absolute; top: 50%; right: 10px; z-index: 2; text-align: center;
+  font-size: 9px; font-weight: 800; border-radius: 6px; padding: 3px 8px; white-space: nowrap;
+  opacity: 0; transform: translateY(-50%) scale(0); transform-origin: right center; box-shadow: 0 2px 7px rgba(15, 10, 30, .16);
+}
+.rv3-b { color: #fff; background: var(--brand); }
+.rv3-r { color: #fff; background: #F0353F; }
+
+/* --- 애니메이션 (스크롤 진입 시 5s 루프, 슬롯 48px = 높이40+간격8) --- */
+.kit-row.visible .rv3-block { animation: rv3-block 6s ease-in-out infinite; }
+.kit-row.visible .rv3-reco { animation: rv3-reco 6s cubic-bezier(.4, 1.3, .5, 1) infinite; }
+.kit-row.visible .rv3-normal { animation: rv3-normal 6s cubic-bezier(.4, 1.3, .5, 1) infinite; }
+.kit-row.visible .rv3-b { animation: rv3-pop 6s ease-in-out infinite; }
+.kit-row.visible .rv3-r { animation: rv3-pop-r 6s ease-in-out infinite; }
+.kit-row.visible .rv3-tnow { animation: rv3-cnt-now 6s ease-in-out infinite; }
+.kit-row.visible .rv3-tdown { animation: rv3-cnt-down 6s ease-in-out infinite; }
+/* 빌드업은 앞쪽(~70%)에서 원래 속도로 진행, 끝에서 완료상태 ~1.4s 유지 후 리셋 */
+/* 추천 태그: 먼저 달림(22%) → 추천리뷰 상승 */
+@keyframes rv3-pop {
+  0%, 20% { opacity: 0; transform: translateY(-50%) scale(0); }
+  25% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+  30%, 88% { opacity: 1; transform: translateY(-50%) scale(1); }
+  93% { opacity: 0; transform: translateY(-50%) scale(1); }
+  93.01%, 100% { opacity: 0; transform: translateY(-50%) scale(0); }
+}
+/* 차단 시 총 리뷰 수 1 감소 (70%에 스왑 → 유지) */
+@keyframes rv3-cnt-now { 0%, 68% { opacity: 1; } 73%, 91% { opacity: 0; } 96%, 100% { opacity: 1; } }
+@keyframes rv3-cnt-down { 0%, 68% { opacity: 0; } 73%, 91% { opacity: 1; } 96%, 100% { opacity: 0; } }
+@keyframes rv3-reco {
+  0%, 27% { transform: translateY(0); }
+  47%, 91% { transform: translateY(-48px); }
+  96%, 100% { transform: translateY(0); }
+}
+@keyframes rv3-normal {
+  0%, 27% { transform: translateY(0); }
+  47%, 91% { transform: translateY(48px); }
+  96%, 100% { transform: translateY(0); }
+}
+/* 차단 태그: 그 다음 달림(52%) → 차단리뷰 제거 */
+@keyframes rv3-pop-r {
+  0%, 47% { opacity: 0; transform: translateY(-50%) scale(0); }
+  52% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+  57%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+@keyframes rv3-block {
+  0%, 53% { opacity: 1; height: 40px; margin-bottom: 0; transform: none; }
+  58% { opacity: 1; transform: translateX(8px); }
+  65% { opacity: 0; transform: translateX(70px); height: 40px; }
+  70%, 91% { opacity: 0; height: 0; margin-bottom: 0; transform: translateX(70px); }
+  96%, 100% { opacity: 0; height: 40px; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kit-row.visible .rv3-block,
+  .kit-row.visible .rv3-reco,
+  .kit-row.visible .rv3-normal,
+  .kit-row.visible .rv3-b,
+  .kit-row.visible .rv3-r { animation: none !important; transform: none !important; opacity: 1 !important; height: 40px !important; }
+  .rv3-tag { transform: translateY(-50%) scale(1) !important; }
+  .rv3-tdown { opacity: 0 !important; }
+}
 
 /* 첫구매킷 — 웰컴 모달 팝업 (인포그래픽 전체 영역) */
 /* 인포 박스 자체를 어두운 딤 화면으로 */
@@ -1005,11 +1228,13 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
 }
 
 .kit-more {
-  margin-top: 28px; text-align: center; font-size: 15px; color: var(--muted);
-  border: 1px dashed var(--border); border-radius: var(--radius-lg); padding: 24px;
+  margin-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 28px;
+  border: 1.5px dashed var(--border); border-radius: var(--radius-lg); padding: 28px 34px;
 }
-.kit-more-label { font-size: 12.5px; font-weight: 700; color: var(--brand); margin-right: 14px; letter-spacing: .08em; }
-.kit-more a { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.kit-more-label { display: inline-block; font-size: 12px; font-weight: 800; color: var(--brand); letter-spacing: .1em; }
+.kit-more-title { font-size: 20px; font-weight: 800; color: var(--dark); letter-spacing: -.3px; margin: 9px 0 6px; }
+.kit-more-sub { font-size: 15px; color: var(--muted); line-height: 1.6; }
+.kit-more-btn { flex: none; white-space: nowrap; }
 
 /* ============================================================
    5. 작동 방식
@@ -1400,6 +1625,20 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
 }
 .form-field label { display: block; font-size: 14.5px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
 .form-field label .req { color: var(--danger); margin-left: 2px; }
+.form-field label .opt-label { font-size: 12.5px; font-weight: 600; color: var(--muted); margin-left: 4px; }
+
+/* 문의할 킷 다중선택 칩 — PC는 한 줄(균등 너비 그리드) */
+.kit-select { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; }
+.kit-sel-chip {
+  font-family: inherit; cursor: pointer; text-align: center; white-space: nowrap;
+  font-size: 14px; font-weight: 700; color: var(--body);
+  background: #fff; border: 1.5px solid var(--border); border-radius: 999px;
+  padding: 9px 10px; transition: border-color .15s, background .15s, color .15s;
+}
+.kit-sel-chip:hover { border-color: var(--brand-mid); }
+.kit-sel-chip.is-sel { background: var(--brand); border-color: var(--brand); color: #fff; }
+.kit-sel-all { font-weight: 800; color: var(--brand); border-style: dashed; border-color: var(--brand-mid); }
+.kit-sel-all.is-sel { background: var(--brand); border-style: solid; color: #fff; }
 .form-field input, .form-field select, .form-field textarea {
   width: 100%; font-family: inherit; font-size: 15.5px; color: var(--dark);
   border: 1.5px solid var(--border); border-radius: 12px;
@@ -1512,6 +1751,26 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
 /* ============================================================
    반응형
    ============================================================ */
+/* 셀킷과 함께라면: 1018px 이하부터 2단 대신 정돈된 세로 스택 (설명 접고 핵심 문구 중심) */
+@media (max-width: 1018px) {
+  .compare { grid-template-columns: 1fr; gap: 12px; max-width: 460px; margin: 26px auto 0; }
+  .compare-col { border-radius: var(--radius); text-align: center; }
+  .compare-before { padding: 22px 20px; }
+  .compare-after { padding: 26px 22px; box-shadow: 0 14px 34px rgba(var(--brand-rgb), .16); }
+  .compare-before .compare-col-head { margin-bottom: 14px; }
+  .compare-after .compare-col-head { margin-bottom: 18px; }
+  .compare-before ul { gap: 13px; }
+  .compare-after ul { gap: 14px; }
+  .compare-col ul { width: fit-content; margin-left: auto; margin-right: auto; align-items: flex-start; }
+  .compare-col li { justify-content: flex-start; text-align: left; }
+  .compare-desc { display: none; }
+  .compare-before .compare-txt { font-size: 14px; }
+  .compare-after .compare-txt { font-size: 15.5px; }
+  .compare-arrow { justify-self: center; margin: -24px 0; transform: translateY(18px) rotate(90deg); }
+  .compare.visible .compare-arrow { transform: rotate(90deg); }
+  .compare.visible .compare-after { animation: none; }
+}
+
 @media (max-width: 960px) {
   section { padding: 80px 0; }
   .pain-grid { grid-template-columns: 1fr; }
@@ -1552,13 +1811,14 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
   /* 킷 카드: 세로 스택 — 이름 → 인포그래픽 → 설명·포인트 → 자세히보기 (모든 카드 통일) */
   .kit-row { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 32px 30px; min-width: 0; text-align: left; }
   .kit-content { display: contents; }
-  .kit-head { order: 0; }
-  .kit-visual { order: 1; margin-top: 22px; min-width: 0; }
-  .kit-row:nth-child(even) .kit-visual { order: 1; } /* 지그재그 해제 */
-  .kit-desc { order: 2; margin-top: 22px; }
-  .kit-points { order: 3; }
-  .kit-foot { order: 4; margin-top: 24px; flex-direction: column; align-items: stretch; gap: 14px; }
-  .kit-go { text-align: center; padding: 13px; border-radius: 12px; background: rgba(var(--brand-rgb), .08); }
+  .kit-foot { display: contents; } /* 칩·버튼을 개별 항목으로 분리 */
+  .kit-head { order: 0; margin-bottom: 0; }
+  .kit-chips { order: 1; margin-top: 12px; } /* 태그: 서브 아래 · 인포 위 */
+  .kit-visual { order: 2; margin-top: 14px; min-width: 0; }
+  .kit-row:nth-child(even) .kit-visual { order: 2; } /* 지그재그 해제 */
+  .kit-desc { order: 3; margin-top: 18px; }
+  .kit-points { order: 4; }
+  .kit-go { order: 5; margin-top: 22px; justify-content: center; text-align: center; padding: 13px; border-radius: 12px; background: rgba(var(--brand-rgb), .08); }
   .kit-row.is-coming .kit-go { background: var(--bg-subtle); }
 }
 @media (max-width: 600px) {
@@ -1571,6 +1831,9 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
   .platform-card:not(.live) { padding: 16px 8px 14px; }
   .platform-card:not(.live) .platform-name { font-size: 14px; height: auto; line-height: 1.3; margin-bottom: 8px; }
   .platform-card:not(.live) .kit-status { font-size: 11px; padding: 3px 8px; }
+  /* NEXT KIT: 세로 스택 + 버튼 풀폭 */
+  .kit-more { flex-direction: column; align-items: flex-start; gap: 18px; padding: 26px 22px; }
+  .kit-more-btn { width: 100%; }
   .hero { padding-top: calc(var(--header-h) + 56px); }
   .hero-cta .btn { width: 100%; }
   .btn-rotate { min-width: 0; }
@@ -1582,9 +1845,10 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
   .kit-desc { font-size: 14px; }
   .kit-points { margin-top: 12px; gap: 5px; }
   .kit-points li { font-size: 13px; }
-  .kit-chips { flex-wrap: wrap; }
-  .kit-visual { order: 1; margin-top: 20px; min-height: 0; padding: 12px 10px; }
-  .kit-foot { margin-top: 20px; }
+  .kit-chips { flex-wrap: wrap; margin-top: 10px; }
+  .kit-head { margin-bottom: 0; }
+  .kit-tagline { margin-bottom: 4px; }
+  .kit-visual { margin-top: 12px; min-height: 0; padding: 12px 10px; }
   /* PC처럼 가로 2패널 유지 — 폭에 맞춰 축소 */
   .ig-set { flex-direction: row; gap: 6px; }
   .ig-set-panel { padding: 9px 6px; gap: 7px; }
@@ -1600,29 +1864,37 @@ a.kit-row:hover { transform: translateY(-4px); border-color: var(--brand-mid); b
   .ig-set-op { font-size: 11px; }
   .ig-set-flabel { font-size: 9px; }
   .ig-set-badge { font-size: 11.5px; padding: 5px 12px; }
+  /* 업셀킷 인포: 모바일은 컴팩트 사이즈로 */
+  .up3 { gap: 12px; }
+  .up3-prod { padding: 12px 14px; gap: 11px; }
+  .up3-thumb { width: 46px; height: 46px; font-size: 24px; border-radius: 11px; }
+  .up3-off { width: 30px; height: 30px; font-size: 8px; top: -8px; left: -8px; }
+  .up3-name { font-size: 12.5px; }
+  .up3-prices b { font-size: 15px; }
+  .up3-prices s { font-size: 11px; }
+  .up3-add { font-size: 12px; padding: 8px 12px; border-radius: 9px; }
+  .up3-plus { font-size: 12px; padding: 2px 8px; right: 14px; }
+  .up3-ship { padding: 12px 14px; }
+  .up3-ship-top { height: 18px; margin-bottom: 9px; }
+  .up3-ship-msg, .up3-ship-done { font-size: 12.5px; }
+  .up3-track { height: 8px; }
+  /* 리뷰킷 인포: 모바일 컴팩트 (행 높이/간격은 유지 → 스왑 정렬 보존) */
+  .rv3 { gap: 10px; }
+  .rv3-score { justify-content: center; }
+  .rv3-total { margin-left: 8px; }
+  .rv3-score b { font-size: 24px; }
+  .rv3-stars { font-size: 12px; }
+  .rv3-total { font-size: 10.5px; }
+  .rv3-av { font-size: 15px; }
+  .rv3-mini { font-size: 9px; }
+  .rv3-tag { font-size: 8.5px; padding: 3px 7px; }
   /* 첫구매킷 팝업: 좁은 화면 대응 */
   .fb-pop { max-width: 300px; }
-  .compare { grid-template-columns: 1fr; gap: 12px; max-width: 460px; margin: 26px auto 0; }
-  .compare-col { border-radius: var(--radius); }
-  .compare-before { padding: 22px 20px; }
-  .compare-after { padding: 26px 22px; box-shadow: 0 14px 34px rgba(var(--brand-rgb), .16); }
-  .compare-before .compare-col-head { margin-bottom: 14px; }
-  .compare-after .compare-col-head { margin-bottom: 18px; }
-  .compare-before ul { gap: 13px; }
-  .compare-after ul { gap: 14px; }
-  /* 모바일: 설명 접고 핵심 문구만 3줄로 노출 */
-  .compare-desc { display: none; }
-  .compare-before .compare-txt { font-size: 13.5px; }
-  .compare-after .compare-txt { font-size: 15px; }
-  .compare-arrow { justify-self: center; margin: -24px 0; transform: translateY(18px) rotate(90deg); }
-  .compare.visible .compare-arrow { transform: rotate(90deg); }
-  .compare.visible .compare-after { animation: none; }
-  /* 모바일: 헤더는 중앙, 리스트는 블록째 중앙 + 항목 시작점 정렬 */
-  .compare-col { text-align: center; }
-  .compare-col ul { width: fit-content; margin-left: auto; margin-right: auto; align-items: flex-start; }
-  .compare-col li { justify-content: flex-start; text-align: left; }
   .sk-footer-cols { gap: 40px; flex-wrap: wrap; }
   .contact-form { padding: 32px 22px; }
+  /* 킷 칩: 모바일에선 줄바꿈 */
+  .kit-select { display: flex; flex-wrap: wrap; }
+  .kit-sel-chip { padding: 9px 15px; }
 
   /* 최종 CTA 밴드 모바일 — 화면 전체 폭으로 풀블리드 */
   .cta { padding: 0; }
