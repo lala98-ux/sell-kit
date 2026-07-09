@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260709a">
 </head>
 <body>
 
@@ -48,22 +48,29 @@
       </div>
 
       <div class="form-field">
-        <label for="fCategory">문의 카테고리<span class="req">*</span></label>
-        <select id="fCategory" name="category" required>
-          <option value="" selected disabled>카테고리를 선택해 주세요</option>
-          <option value="기능 문의">기능 문의</option>
-          <option value="오류 신고">오류 신고</option>
-          <option value="결제·구독">결제·구독</option>
-          <option value="설치·연동">설치·연동</option>
-          <option value="디자인·노출">디자인·노출</option>
-          <option value="기타">기타</option>
-        </select>
+        <label id="catLabel">문의 카테고리<span class="req">*</span></label>
+        <div class="cat-dd" id="catDD">
+          <button type="button" class="cat-trigger" id="catTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="catLabel">
+            <span class="cat-value is-placeholder">카테고리를 선택해 주세요</span>
+            <svg class="cat-arrow" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="cat-menu" id="catMenu" role="listbox" aria-labelledby="catLabel">
+            <li class="cat-opt" role="option" data-value="기능 문의">기능 문의</li>
+            <li class="cat-opt" role="option" data-value="오류 신고">오류 신고</li>
+            <li class="cat-opt" role="option" data-value="결제·구독">결제·구독</li>
+            <li class="cat-opt" role="option" data-value="설치·연동">설치·연동</li>
+            <li class="cat-opt" role="option" data-value="디자인·노출">디자인·노출</li>
+            <li class="cat-opt" role="option" data-value="기타">기타</li>
+          </ul>
+        </div>
+        <input type="hidden" id="fCategory" name="category">
         <p class="field-error"></p>
       </div>
 
       <div class="form-field">
         <label for="fMessage">문의 내용<span class="req">*</span></label>
-        <textarea id="fMessage" name="message" placeholder="쇼핑몰 주소와 함께 궁금한 내용을 자유롭게 남겨주세요."></textarea>
+        <textarea id="fMessage" name="message" maxlength="1000" placeholder="쇼핑몰 주소와 함께 궁금한 내용을 자유롭게 남겨주세요."></textarea>
+        <div class="char-count"><span id="msgCount">0</span>/1000</div>
         <p class="field-error"></p>
       </div>
 

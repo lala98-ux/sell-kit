@@ -78,6 +78,49 @@
                    .map(function (c) { return c.getAttribute('data-kit'); });
   }
 
+  /* 문의 카테고리 — 커스텀 드롭다운 */
+  (function () {
+    var dd = $('catDD'), trigger = $('catTrigger'), menu = $('catMenu'), hidden = $('fCategory');
+    if (!dd || !trigger || !menu || !hidden) return;
+    var valueEl = trigger.querySelector('.cat-value');
+    var opts = Array.prototype.slice.call(menu.querySelectorAll('.cat-opt'));
+
+    function open() { dd.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+    function close() { dd.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      dd.classList.contains('open') ? close() : open();
+    });
+    opts.forEach(function (o) {
+      o.addEventListener('click', function () {
+        var v = o.getAttribute('data-value');
+        hidden.value = v;
+        valueEl.textContent = v;
+        valueEl.classList.remove('is-placeholder');
+        trigger.classList.add('has-value');
+        opts.forEach(function (x) { x.classList.remove('is-active'); });
+        o.classList.add('is-active');
+        dd.closest('.form-field').classList.remove('has-error');
+        close();
+      });
+    });
+    document.addEventListener('click', function (e) { if (!dd.contains(e.target)) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+
+  /* 문의 내용 글자수 카운터 (N/1000) */
+  (function () {
+    var msg = $('fMessage'), cnt = $('msgCount');
+    if (!msg || !cnt) return;
+    var max = 1000;
+    msg.addEventListener('input', function () {
+      if (msg.value.length > max) msg.value = msg.value.slice(0, max);
+      cnt.textContent = msg.value.length;
+      cnt.parentNode.classList.toggle('is-full', msg.value.length >= max);
+    });
+  })();
+
   function invalid(el, msg) {
     var wrap = el.closest('.form-field');
     wrap.classList.add('has-error');
