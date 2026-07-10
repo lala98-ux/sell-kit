@@ -11,7 +11,7 @@
     '<footer class="sk-footer">' +
       '<div class="sk-footer-inner">' +
         '<div class="sk-footer-top">' +
-          '<div class="sk-footer-logo"><img src="' + R + 'assets/img/sellkit_logo_1.png" alt="셀킷 로고">sellkit</div>' +
+          '<a class="sk-footer-logo" href="' + R + 'index.html" style="text-decoration:none;color:inherit;cursor:pointer;"><img src="' + R + 'assets/img/sellkit_logo_1.png" alt="셀킷 로고">sellkit</a>' +
           '<div class="sk-footer-line">' +
             '<p>클릭 몇 번으로 시작하는 쇼핑몰 성장 키트</p>' +
             '<div class="sk-footer-policy">' +
@@ -31,9 +31,25 @@
       '</div>' +
     '</footer>';
 
+  var here = decodeURIComponent(location.pathname);
+  var isMain = !/(contact|terms|privacy)\.html/.test(here) &&
+    !(window.SELLKIT_KITS || []).some(function (k) {
+      return k.path && here.indexOf('/' + k.path.split('/')[0] + '/') !== -1;
+    });
+
   function render() {
     var mount = document.getElementById('sellkit-footer');
-    if (mount) mount.innerHTML = html;
+    if (!mount) return;
+    mount.innerHTML = html;
+
+    /* 메인 페이지: 푸터 로고 클릭 → 재로딩 없이 최상단으로 스크롤 */
+    var logo = mount.querySelector('.sk-footer-logo');
+    if (logo && isMain) {
+      logo.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   }
 
   if (document.readyState === 'loading') {

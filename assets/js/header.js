@@ -12,6 +12,7 @@
     return k.path && here.indexOf('/' + k.path.split('/')[0] + '/') !== -1;
   })[0];
   var isKitPage = !!currentKit;
+  var isMain = !isKitPage && !/(contact|terms|privacy)\.html/.test(here);
 
   function kitItems(cls) {
     return SELLKIT_KITS.map(function (kit) {
@@ -33,7 +34,7 @@
       '<div class="sk-header-inner">' +
         '<div class="sk-brand">' +
           '<a class="sk-logo" href="' + R + 'index.html"><img src="' + R + 'assets/img/sellkit_logo_1.png" alt="셀킷 로고">sellkit</a>' +
-          (currentKit ? '<span class="sk-kit-badge">' + currentKit.name + '</span>' : '') +
+          (currentKit ? '<span class="sk-kit-badge" role="button" tabindex="0">' + currentKit.name + '</span>' : '') +
         '</div>' +
         '<nav class="sk-nav">' +
           '<div class="sk-nav-item sk-has-drop' + (isKitPage ? ' active' : '') + '">' +
@@ -92,6 +93,26 @@
     window.addEventListener('scroll', function () {
       headerEl.classList.toggle('scrolled', window.scrollY > 8);
     });
+
+    function scrollTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 메인 페이지: 헤더 로고 클릭 → 최상단으로 스크롤 (재로딩 없이) */
+    var logo = headerEl.querySelector('.sk-logo');
+    if (logo && isMain) {
+      logo.addEventListener('click', function (e) { e.preventDefault(); scrollTop(); });
+    }
+
+    /* 킷 상세 페이지: 로고 옆 킷 배지 클릭 → 해당 킷 최상단으로 스크롤 */
+    var badge = headerEl.querySelector('.sk-kit-badge');
+    if (badge) {
+      badge.style.cursor = 'pointer';
+      badge.addEventListener('click', scrollTop);
+      badge.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollTop(); }
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
